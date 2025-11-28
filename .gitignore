@@ -1,0 +1,19 @@
+# 临时文件
+temp_ppt_extract/
+*.pptx
+*.pptm
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 旧文件（保留但不上传）
+公司介绍*.html
+联系我们*.html
+block grid.html
