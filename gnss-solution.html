@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="GNSS监测,矿山形变监测,北斗定位,地质灾害预警">
+    <meta name="description" content="安智信科技 - 矿山地表形变GNSS自动化监测预警系统，实现全天候、毫米级、无人值守监测">
+    <title>矿山地表形变GNSS自动化监测预警系统 - 安智信科技</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="安智信科技" class="logo-img">
+                        <span class="logo-text">安智信科技</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">产品中心</a></li>
+                    <li><a href="solutions.html">解决方案</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header section-padding" style="padding-top: 120px; background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%); color: white;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(0, 212, 255, 0.2); border-radius: 20px; font-size: 0.875rem; font-weight: 600; letter-spacing: 1px;">
+                    智慧矿山 · 安全先行
+                </span>
+            </div>
+            <h1 class="section-title" style="color: white; margin-bottom: 1rem;">矿山地表形变 <span style="color: var(--accent-color);">GNSS自动化监测</span> 预警系统</h1>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">利用北斗/GPS高精度定位技术，实现对矿区边坡、尾矿库及沉陷区的全天候、毫米级、无人值守监测。从"人防"到"技防"的革命性跨越。</p>
+        </div>
+    </section>
+
+    <!-- 核心监测指标概览 -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="gnss-intro-section">
+                <h2 class="gnss-section-title">核心监测指标概览</h2>
+                <p class="gnss-section-desc">
+                    本系统通过高密度部署的GNSS监测终端，实时捕捉地表微小位移。以下是系统运行的核心效能数据，展示了相比传统人工监测的巨大优势。
+                </p>
+            </div>
+
+            <div class="gnss-kpi-grid">
+                <div class="gnss-kpi-card">
+                    <div class="gnss-kpi-label">水平/垂直测量精度</div>
+                    <div class="gnss-kpi-value">
+                        2<span class="gnss-kpi-unit">mm</span>
+                    </div>
+                    <p class="gnss-kpi-desc">RTK载波相位差分技术，实现毫米级微形变捕捉。</p>
+                </div>
+
+                <div class="gnss-kpi-card" style="border-top-color: #10b981;">
+                    <div class="gnss-kpi-label">全天候运行能力</div>
+                    <div class="gnss-kpi-value" style="color: #10b981;">
+                        24<span class="gnss-kpi-unit">h</span>
+                    </div>
+                    <p class="gnss-kpi-desc">无惧雨雪雾霾，不仅限于白昼，提供不间断的数据流。</p>
+                </div>
+
+                <div class="gnss-kpi-card" style="border-top-color: #f59e0b;">
+                    <div class="gnss-kpi-label">预警响应速度</div>
+                    <div class="gnss-kpi-value" style="color: #f59e0b;">
+                        &lt;3<span class="gnss-kpi-unit">s</span>
+                    </div>
+                    <p class="gnss-kpi-desc">数据解算完成即刻触发预警，秒级推送至管理终端。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 形变趋势实时追踪 -->
+    <section class="section-padding bg-dark">
+        <div class="container">
+            <div class="gnss-chart-section">
+                <div class="gnss-chart-content">
+                    <h2 class="gnss-section-title" style="color: white;">形变趋势实时追踪</h2>
+                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+                        上图展示了某重点监测点位（TP-03）在过去30天内的三维位移累积变化。
+                    </p>
+                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">
+                        传统人工测量受天气和光照限制，数据呈离散状。GNSS自动化系统生成的曲线连续平滑，能够捕捉到突发性的加速形变趋势（如图中第22-24天出现的降雨后位移加速），为撤离决策争取宝贵时间。
+                    </p>
+                    <div class="gnss-highlight-box">
+                        <div class="gnss-highlight-title">关键发现</div>
+                        <p class="gnss-highlight-text">
+                            X方向（东西向）位移在强降雨后呈现明显的加速趋势，系统已自动标记黄色预警。
+                        </p>
+                    </div>
+                </div>
+                <div class="gnss-chart-wrapper">
+                    <div class="gnss-chart-card">
+                        <div class="gnss-chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 监测点位空间分布 -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="gnss-intro-section">
+                <h2 class="gnss-section-title">监测点位空间分布与稳定性分析</h2>
+                <p class="gnss-section-desc">
+                    通过对矿山边坡进行三维建模与点位映射，我们可以直观看到不同高程和区域的稳定性情况。
+                    下图模拟了矿山边坡监测点的空间分布，颜色代表累计沉降量。红色区域表示沉降量较大，需要重点关注。
+                </p>
+            </div>
+
+            <div class="gnss-chart-card">
+                <div id="spatialChart" class="gnss-plotly-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统运行全流程解析 -->
+    <section class="section-padding bg-dark">
+        <div class="container">
+            <div class="gnss-intro-section" style="text-align: center;">
+                <h2 class="gnss-section-title" style="color: white;">系统运行全流程解析</h2>
+                <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9);">
+                    从卫星信号采集到最终的预警发布，系统实现了全链路的自动化处理，消除了人为误差。
+                </p>
+            </div>
+
+            <div class="gnss-workflow">
+                <div class="gnss-workflow-step">
+                    <div class="gnss-workflow-icon">🛰️</div>
+                    <div class="gnss-workflow-title">数据采集</div>
+                    <div class="gnss-workflow-desc">GNSS接收机接收北斗/GPS卫星信号</div>
+                </div>
+                <div class="gnss-workflow-arrow">➤</div>
+                <div class="gnss-workflow-step">
+                    <div class="gnss-workflow-icon">📡</div>
+                    <div class="gnss-workflow-title">数据传输</div>
+                    <div class="gnss-workflow-desc">4G/5G/LoRa无线网络实时回传</div>
+                </div>
+                <div class="gnss-workflow-arrow">➤</div>
+                <div class="gnss-workflow-step">
+                    <div class="gnss-workflow-icon">🖥️</div>
+                    <div class="gnss-workflow-title">解算分析</div>
+                    <div class="gnss-workflow-desc">云服务器高精度基线解算算法</div>
+                </div>
+                <div class="gnss-workflow-arrow">➤</div>
+                <div class="gnss-workflow-step gnss-workflow-step-alert">
+                    <div class="gnss-workflow-icon">📱</div>
+                    <div class="gnss-workflow-title">预警发布</div>
+                    <div class="gnss-workflow-desc">短信/微信/声光报警多维触达</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 对比分析 -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="gnss-comparison-grid">
+                <div class="gnss-comparison-card">
+                    <h3 class="gnss-comparison-title">传统人工 vs GNSS自动化</h3>
+                    <p class="gnss-comparison-desc">
+                        雷达图清晰展示了自动化系统在时间分辨率、数据精度、长期成本及安全性上的全面领先。
+                    </p>
+                    <div class="gnss-chart-card">
+                        <div class="gnss-chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gnss-comparison-card">
+                    <h3 class="gnss-comparison-title">当前全矿区安全状态分布</h3>
+                    <p class="gnss-comparison-desc">
+                        展示当前接入系统的200+个监测点位的实时状态分布。绝大多数点位处于稳定状态。
+                    </p>
+                    <div class="gnss-chart-card">
+                        <div class="gnss-chart-container">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="安智信科技" class="footer-logo-img">
+                    </div>
+                    <h3>安智信科技</h3>
+                    <p>专业的电网行业物联网产品和解决方案供应商</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="products.html">产品中心</a></li>
+                        <li><a href="solutions.html">解决方案</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="contact.html">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li>地址：广州市黄埔区神舟路9号4栋321室</li>
+                        <li>电话：400-691-1891</li>
+                        <li>邮编：510000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 广州安智信科技有限公司 | 
+                    <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备20002948号</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 工具函数：标签换行
+        function wrapLabel(label) {
+            const MAX_LENGTH = 16;
+            if (typeof label !== 'string' || label.length <= MAX_LENGTH) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length < MAX_LENGTH) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // 通用 Tooltip 配置
+        const commonTooltipPlugin = {
+            callbacks: {
+                title: function (tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // 等待 DOM 加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 形变趋势图表 (折线图)
+            const ctxTrend = document.getElementById('trendChart');
+            if (ctxTrend) {
+                const days = Array.from({ length: 30 }, (_, i) => `11月${i + 1}日`);
+                const dataX = [];
+                const dataY = [];
+                const dataZ = [];
+                let valX = 0, valY = 0, valZ = 0;
+
+                for (let i = 0; i < 30; i++) {
+                    let rainFactor = (i > 21 && i < 25) ? 3 : 1;
+                    valX += (Math.random() - 0.3) * 2 * rainFactor;
+                    valY += (Math.random() - 0.5) * 1;
+                    valZ += (Math.random() - 0.7) * 2.5 * rainFactor;
+                    dataX.push(valX);
+                    dataY.push(valY);
+                    dataZ.push(valZ);
+                }
+
+                new Chart(ctxTrend.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [
+                            {
+                                label: 'X方向位移 (累计)',
+                                data: dataX,
+                                borderColor: '#0ea5e9',
+                                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointRadius: 2
+                            },
+                            {
+                                label: 'Y方向位移 (累计)',
+                                data: dataY,
+                                borderColor: '#94a3b8',
+                                borderWidth: 1,
+                                borderDash: [5, 5],
+                                tension: 0.4,
+                                pointRadius: 0
+                            },
+                            {
+                                label: 'Z方向沉降 (累计)',
+                                data: dataZ,
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointRadius: 2,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: commonTooltipPlugin,
+                            legend: { position: 'top' },
+                            title: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                title: { display: true, text: '形变量 (mm)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: 'rgba(255, 255, 255, 0.9)' }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: 'rgba(255, 255, 255, 0.9)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. 空间分布图表 (Plotly)
+            const spatialChartEl = document.getElementById('spatialChart');
+            if (spatialChartEl) {
+                const xPoints = [];
+                const yPoints = [];
+                const zValues = [];
+                const deformationColors = [];
+
+                for (let x = 0; x < 20; x++) {
+                    for (let y = 0; y < 20; y++) {
+                        xPoints.push(x * 10);
+                        yPoints.push(y * 10);
+                        let height = 200 - (x * 5) - (Math.random() * 2);
+                        zValues.push(height);
+                        let deform = (x / 20) * 30 + (Math.random() * 5);
+                        deformationColors.push(deform);
+                    }
+                }
+
+                const traceSpatial = {
+                    x: xPoints,
+                    y: yPoints,
+                    mode: 'markers',
+                    type: 'scattergl',
+                    marker: {
+                        size: 10,
+                        color: deformationColors,
+                        colorscale: 'Jet',
+                        showscale: true,
+                        colorbar: {
+                            title: '累计沉降量 (mm)',
+                            thickness: 10
+                        },
+                        opacity: 0.8
+                    },
+                    text: deformationColors.map(d => `沉降: ${d.toFixed(1)}mm`),
+                    hoverinfo: 'text'
+                };
+
+                const layoutSpatial = {
+                    margin: { t: 20, b: 40, l: 40, r: 20 },
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(241, 245, 249, 0.5)',
+                    xaxis: { title: '矿区东西向距离 (m)', showgrid: true, gridcolor: '#e2e8f0' },
+                    yaxis: { title: '矿区南北向距离 (m)', showgrid: true, gridcolor: '#e2e8f0' }
+                };
+
+                Plotly.newPlot('spatialChart', [traceSpatial], layoutSpatial, { responsive: true, displayModeBar: false });
+            }
+
+            // 3. 雷达对比图
+            const ctxRadar = document.getElementById('radarChart');
+            if (ctxRadar) {
+                const radarLabelsRaw = [
+                    "监测数据的时间分辨率 (Frequency)",
+                    "毫米级测量精度 (Accuracy)",
+                    "长期运营维护成本 (Low Cost)",
+                    "全天候环境适应性 (Durability)",
+                    "数据采集安全性 (Safety)"
+                ];
+                const radarLabels = radarLabelsRaw.map(wrapLabel);
+
+                new Chart(ctxRadar.getContext('2d'), {
+                    type: 'radar',
+                    data: {
+                        labels: radarLabels,
+                        datasets: [{
+                            label: 'GNSS自动化监测',
+                            data: [95, 90, 85, 98, 100],
+                            fill: true,
+                            backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                            borderColor: '#0ea5e9',
+                            pointBackgroundColor: '#0ea5e9',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#0ea5e9'
+                        }, {
+                            label: '传统人工测量',
+                            data: [30, 70, 40, 50, 60],
+                            fill: true,
+                            backgroundColor: 'rgba(148, 163, 184, 0.2)',
+                            borderColor: '#94a3b8',
+                            pointBackgroundColor: '#94a3b8',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#94a3b8'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            tooltip: commonTooltipPlugin,
+                            legend: { position: 'bottom' }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: { color: '#cbd5e1' },
+                                grid: { color: '#e2e8f0' },
+                                pointLabels: {
+                                    font: { size: 11 }
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 4. 状态分布图 (甜甜圈图)
+            const ctxStatus = document.getElementById('statusChart');
+            if (ctxStatus) {
+                new Chart(ctxStatus.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['正常运行 (Stable)', '蓝色预警 (Notice)', '黄色预警 (Warning)', '红色报警 (Critical)'],
+                        datasets: [{
+                            data: [185, 12, 3, 0],
+                            backgroundColor: [
+                                '#10b981',
+                                '#3b82f6',
+                                '#f59e0b',
+                                '#ef4444'
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            tooltip: commonTooltipPlugin,
+                            legend: {
+                                position: 'right',
+                                labels: { boxWidth: 12 }
+                            }
+                        }
+                    },
+                    plugins: [{
+                        id: 'centerText',
+                        beforeDraw: function (chart) {
+                            var width = chart.width,
+                                height = chart.height,
+                                ctx = chart.ctx;
+
+                            ctx.restore();
+                            var fontSize = (height / 114).toFixed(2);
+                            ctx.font = "bold " + fontSize + "em sans-serif";
+                            ctx.textBaseline = "middle";
+                            ctx.fillStyle = "#0f172a";
+
+                            var text = "92.5%",
+                                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                                textY = height / 2;
+
+                            ctx.fillText(text, textX, textY);
+
+                            ctx.font = "normal " + (fontSize * 0.4).toFixed(2) + "em sans-serif";
+                            ctx.fillStyle = "#64748b";
+                            var subtext = "安全率",
+                                subtextX = Math.round((width - ctx.measureText(subtext).width) / 2),
+                                subtextY = height / 2 + 25;
+                            ctx.fillText(subtext, subtextX, subtextY);
+
+                            ctx.save();
+                        }
+                    }]
+                });
+            }
+        });
+    </script>
+    <style>
+        /* GNSS 页面专用样式 */
+        .gnss-intro-section {
+            margin-bottom: 3rem;
+        }
+
+        .gnss-section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            border-left: 8px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+
+        .bg-dark .gnss-section-title {
+            color: white;
+            border-left-color: var(--accent-color);
+        }
+
+        .gnss-section-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.125rem;
+        }
+
+        .gnss-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gnss-kpi-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--accent-color);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .gnss-kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .gnss-kpi-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .gnss-kpi-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .gnss-kpi-unit {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-left: 0.25rem;
+        }
+
+        .gnss-kpi-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .gnss-chart-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .gnss-chart-content {
+            padding-right: 2rem;
+        }
+
+        .gnss-highlight-box {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gnss-highlight-title {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gnss-highlight-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .gnss-chart-wrapper {
+            width: 100%;
+        }
+
+        .gnss-chart-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gnss-chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .gnss-plotly-container {
+            width: 100%;
+            height: 500px;
+        }
+
+        .gnss-workflow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gnss-workflow-step {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .gnss-workflow-step:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .gnss-workflow-step-alert {
+            border-color: rgba(251, 146, 60, 0.5);
+            background: rgba(251, 146, 60, 0.1);
+        }
+
+        .gnss-workflow-step-alert:hover {
+            border-color: #fb923c;
+        }
+
+        .gnss-workflow-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .gnss-workflow-title {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gnss-workflow-step-alert .gnss-workflow-title {
+            color: #fb923c;
+        }
+
+        .gnss-workflow-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .gnss-workflow-arrow {
+            font-size: 2rem;
+            color: var(--accent-color);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        .gnss-comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gnss-comparison-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .gnss-comparison-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .gnss-comparison-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .gnss-chart-section {
+                grid-template-columns: 1fr;
+            }
+
+            .gnss-chart-content {
+                padding-right: 0;
+            }
+
+            .gnss-workflow {
+                flex-direction: column;
+            }
+
+            .gnss-workflow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gnss-kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gnss-comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gnss-section-title {
+                font-size: 1.5rem;
+            }
+
+            .gnss-kpi-value {
+                font-size: 2.5rem;
+            }
+
+            .gnss-chart-container {
+                height: 300px;
+            }
+
+            .gnss-plotly-container {
+                height: 400px;
+            }
+        }
+    </style>
+</body>
+</html>
+

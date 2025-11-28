@@ -340,14 +340,19 @@
                 // 1. P2P 图表 (甜甜圈图)
                 const p2pCtx = document.getElementById('p2pChart');
                 if (p2pCtx) {
+                    const p2pData = [45, 25, 20, 10];
+                    const p2pLabels = ['户用光伏 (居民)', '社区风电', '电网储能', '主网备用'];
+                    const total = p2pData.reduce((a, b) => a + b, 0);
+                    
                     new Chart(p2pCtx.getContext('2d'), {
                         type: 'doughnut',
                         data: {
-                            labels: ['户用光伏 (居民)', '社区风电', '电网储能', '主网备用'],
+                            labels: p2pLabels,
                             datasets: [{
-                                data: [45, 25, 20, 10],
+                                data: p2pData,
                                 backgroundColor: [colorAccent, colorCyan, colorPurple, colorSlate],
-                                borderWidth: 0
+                                borderWidth: 2,
+                                borderColor: 'rgba(255, 255, 255, 0.1)'
                             }]
                         },
                         options: {
@@ -356,55 +361,125 @@
                                 legend: { 
                                     position: 'bottom',
                                     labels: { 
-                                        color: 'rgba(255, 255, 255, 0.9)',
-                                        padding: 15,
-                                        font: { size: 12 }
+                                        color: 'rgba(255, 255, 255, 0.95)',
+                                        padding: 18,
+                                        font: { size: 13, weight: '600' },
+                                        generateLabels: function(chart) {
+                                            const data = chart.data;
+                                            if (data.labels.length && data.datasets.length) {
+                                                return data.labels.map((label, i) => {
+                                                    const value = data.datasets[0].data[i];
+                                                    const percentage = ((value / total) * 100).toFixed(0);
+                                                    return {
+                                                        text: `${label} (${percentage}%)`,
+                                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                                        strokeStyle: data.datasets[0].borderColor,
+                                                        lineWidth: data.datasets[0].borderWidth,
+                                                        hidden: false,
+                                                        index: i
+                                                    };
+                                                });
+                                            }
+                                            return [];
+                                        }
                                     }
                                 },
-                                tooltip: commonTooltipOptions,
+                                tooltip: {
+                                    callbacks: {
+                                        title: function(tooltipItems) {
+                                            return tooltipItems[0].label;
+                                        },
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = context.parsed || 0;
+                                            const percentage = ((value / total) * 100).toFixed(1);
+                                            return `${label}: ${value}% (占比 ${percentage}%)`;
+                                        }
+                                    },
+                                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                                    padding: 12,
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 13 }
+                                },
                                 title: {
                                     display: true,
                                     text: 'P2P 交易中的电力来源',
-                                    color: 'rgba(255, 255, 255, 0.9)',
-                                    font: { size: 16, weight: 'bold' },
-                                    padding: { bottom: 20 }
+                                    color: 'rgba(255, 255, 255, 0.95)',
+                                    font: { size: 18, weight: 'bold' },
+                                    padding: { bottom: 25 }
                                 }
                             }
-                        }
+                        },
+                        plugins: [{
+                            id: 'centerText',
+                            afterDatasetsDraw: function(chart) {
+                                const ctx = chart.ctx;
+                                const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
+                                const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
+                                
+                                ctx.save();
+                                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                                ctx.font = 'bold 16px sans-serif';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                                ctx.shadowBlur = 4;
+                                ctx.fillText('总计', centerX, centerY - 12);
+                                ctx.font = 'bold 28px sans-serif';
+                                ctx.fillText('100%', centerX, centerY + 12);
+                                ctx.restore();
+                            }
+                        }, {
+                            id: 'percentageLabels',
+                            afterDatasetsDraw: function(chart) {
+                                const ctx = chart.ctx;
+                                const meta = chart.getDatasetMeta(0);
+                                const data = chart.data.datasets[0].data;
+                                
+                                meta.data.forEach((arc, index) => {
+                                    const percentage = ((data[index] / total) * 100).toFixed(0);
+                                    if (percentage >= 10) {
+                                        const angle = (arc.startAngle + arc.endAngle) / 2;
+                                        const x = arc.x + Math.cos(angle) * (arc.innerRadius + (arc.outerRadius - arc.innerRadius) / 2);
+                                        const y = arc.y + Math.sin(angle) * (arc.innerRadius + (arc.outerRadius - arc.innerRadius) / 2);
+                                        
+                                        ctx.save();
+                                        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                                        ctx.font = 'bold 14px sans-serif';
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+                                        ctx.shadowBlur = 3;
+                                        ctx.fillText(percentage + '%', x, y);
+                                        ctx.restore();
+                                    }
+                                });
+                            }
+                        }]
                     });
                 }
 
                 // 2. VPP 图表 (堆叠柱状图)
                 const vppCtx = document.getElementById('vppChart');
                 if (vppCtx) {
+                    const vppDatasets = [
+                        { label: '户用光伏', data: [20, 85, 60, 5], backgroundColor: colorCyan },
+                        { label: '电动汽车电池 (V2G)', data: [50, 10, 20, 70], backgroundColor: colorPurple },
+                        { label: '工业备用电源', data: [30, 30, 30, 30], backgroundColor: colorAccent }
+                    ];
+                    
                     new Chart(vppCtx.getContext('2d'), {
                         type: 'bar',
                         data: {
                             labels: ['08:00', '12:00', '16:00', '20:00'],
-                            datasets: [
-                                {
-                                    label: '户用光伏',
-                                    data: [20, 85, 60, 5],
-                                    backgroundColor: colorCyan,
-                                },
-                                {
-                                    label: '电动汽车电池 (V2G)',
-                                    data: [50, 10, 20, 70],
-                                    backgroundColor: colorPurple,
-                                },
-                                {
-                                    label: '工业备用电源',
-                                    data: [30, 30, 30, 30],
-                                    backgroundColor: colorAccent,
-                                }
-                            ]
+                            datasets: vppDatasets
                         },
                         options: {
                             maintainAspectRatio: false,
                             scales: {
                                 x: { 
                                     stacked: true,
-                                    ticks: { color: 'rgba(255, 255, 255, 0.9)', font: { size: 12 } },
+                                    ticks: { color: 'rgba(255, 255, 255, 0.9)', font: { size: 13, weight: '500' } },
                                     grid: { color: 'rgba(255, 255, 255, 0.1)' }
                                 },
                                 y: { 
@@ -412,32 +487,97 @@
                                     title: { 
                                         display: true, 
                                         text: '能源输出 (MW)',
-                                        color: 'rgba(255, 255, 255, 0.9)',
-                                        font: { size: 14 }
+                                        color: 'rgba(255, 255, 255, 0.95)',
+                                        font: { size: 15, weight: '600' }
                                     },
-                                    ticks: { color: 'rgba(255, 255, 255, 0.9)', font: { size: 12 } },
+                                    ticks: { 
+                                        color: 'rgba(255, 255, 255, 0.9)', 
+                                        font: { size: 12 },
+                                        callback: function(value) {
+                                            return value + ' MW';
+                                        }
+                                    },
                                     grid: { color: 'rgba(255, 255, 255, 0.1)' }
                                 }
                             },
                             plugins: {
-                                tooltip: commonTooltipOptions,
+                                tooltip: {
+                                    callbacks: {
+                                        title: function(tooltipItems) {
+                                            return tooltipItems[0].label;
+                                        },
+                                        label: function(context) {
+                                            const label = context.dataset.label || '';
+                                            const value = context.parsed.y || 0;
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            return `${label}: ${value} MW`;
+                                        },
+                                        footer: function(tooltipItems) {
+                                            const total = tooltipItems.reduce((sum, item) => {
+                                                return sum + (item.parsed.y || 0);
+                                            }, 0);
+                                            return `总计: ${total} MW`;
+                                        }
+                                    },
+                                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                                    padding: 12,
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 13 }
+                                },
                                 legend: { 
                                     position: 'top',
                                     labels: { 
-                                        color: 'rgba(255, 255, 255, 0.9)',
-                                        padding: 15,
-                                        font: { size: 12 }
+                                        color: 'rgba(255, 255, 255, 0.95)',
+                                        padding: 18,
+                                        font: { size: 13, weight: '600' },
+                                        usePointStyle: true,
+                                        pointStyle: 'circle'
                                     }
                                 },
                                 title: {
                                     display: true,
                                     text: '虚拟电厂聚合能源来源',
-                                    color: 'rgba(255, 255, 255, 0.9)',
-                                    font: { size: 16, weight: 'bold' },
-                                    padding: { bottom: 20 }
+                                    color: 'rgba(255, 255, 255, 0.95)',
+                                    font: { size: 18, weight: 'bold' },
+                                    padding: { bottom: 25 }
                                 }
                             }
-                        }
+                        },
+                        plugins: [{
+                            id: 'stackedBarLabels',
+                            afterDatasetsDraw: function(chart) {
+                                const ctx = chart.ctx;
+                                const meta = chart.getDatasetMeta(0);
+                                const datasets = chart.data.datasets;
+                                
+                                // 计算每个堆叠条的总高度
+                                const totals = chart.data.labels.map((_, labelIndex) => {
+                                    return datasets.reduce((sum, dataset) => sum + dataset.data[labelIndex], 0);
+                                });
+                                
+                                // 为每个数据集绘制标签
+                                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                                    const meta = chart.getDatasetMeta(datasetIndex);
+                                    meta.data.forEach((bar, index) => {
+                                        const value = dataset.data[index];
+                                        if (value > 5) { // 只显示大于5的值
+                                            const x = bar.x;
+                                            const y = bar.y;
+                                            
+                                            ctx.save();
+                                            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                                            ctx.font = 'bold 12px sans-serif';
+                                            ctx.textAlign = 'center';
+                                            ctx.textBaseline = 'middle';
+                                            ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+                                            ctx.shadowBlur = 3;
+                                            ctx.fillText(value + 'MW', x, y - 8);
+                                            ctx.restore();
+                                        }
+                                    });
+                                });
+                            }
+                        }]
                     });
                 }
 
@@ -514,14 +654,20 @@
                 // 4. 延迟图表 (水平条形图)
                 const latencyCtx = document.getElementById('latencyChart');
                 if (latencyCtx) {
+                    const latencyLabels = ['电网继电保护', '联盟链', '公有链 (PoW)'];
+                    const latencyData = [1, 50, 150];
+                    const latencyDescriptions = ['需求：< 10毫秒', '速度：约 1-2 秒', '速度：10分钟以上'];
+                    
                     new Chart(latencyCtx.getContext('2d'), {
                         type: 'bar',
                         data: {
-                            labels: ['电网继电保护', '联盟链', '公有链 (PoW)'],
+                            labels: latencyLabels,
                             datasets: [{
                                 label: '响应时间 (对数刻度示意)',
-                                data: [1, 50, 150],
-                                backgroundColor: [colorRed, colorAccent, colorCyan]
+                                data: latencyData,
+                                backgroundColor: [colorRed, colorAccent, colorCyan],
+                                borderWidth: 2,
+                                borderColor: 'rgba(255, 255, 255, 0.2)'
                             }]
                         },
                         options: {
@@ -529,29 +675,55 @@
                             indexAxis: 'y',
                             scales: {
                                 x: {
-                                    display: false,
-                                    ticks: { color: 'rgba(255, 255, 255, 0.9)' },
-                                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                                    display: true,
+                                    ticks: { 
+                                        color: 'rgba(255, 255, 255, 0.9)',
+                                        font: { size: 11 },
+                                        callback: function(value) {
+                                            return value + 'ms';
+                                        }
+                                    },
+                                    grid: { 
+                                        color: 'rgba(255, 255, 255, 0.1)',
+                                        display: true
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: '响应时间 (对数刻度)',
+                                        color: 'rgba(255, 255, 255, 0.9)',
+                                        font: { size: 12 }
+                                    }
                                 },
                                 y: {
                                     ticks: { 
                                         color: 'rgba(255, 255, 255, 0.9)',
-                                        font: { size: 12 }
+                                        font: { size: 13, weight: '500' }
                                     },
-                                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                                    grid: { 
+                                        color: 'rgba(255, 255, 255, 0.1)',
+                                        display: false
+                                    }
                                 }
                             },
                             plugins: {
                                 tooltip: {
                                     callbacks: {
-                                        title: commonTooltipOptions.callbacks.title,
+                                        title: function(tooltipItems) {
+                                            return tooltipItems[0].label;
+                                        },
                                         label: function(context) {
-                                            const raw = context.raw;
-                                            if(raw === 1) return '需求：< 10毫秒 (Milliseconds)';
-                                            if(raw === 50) return '速度：约 1-2 秒';
-                                            if(raw === 150) return '速度：10分钟以上';
+                                            const index = context.dataIndex;
+                                            const value = context.parsed.x;
+                                            return [
+                                                latencyDescriptions[index],
+                                                `数值: ${value}ms (对数刻度)`
+                                            ];
                                         }
-                                    }
+                                    },
+                                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                                    padding: 12,
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 13 }
                                 },
                                 legend: { 
                                     display: false 
@@ -559,12 +731,45 @@
                                 title: {
                                     display: true,
                                     text: '响应时间：电网需求 vs 区块链现状',
-                                    color: 'rgba(255, 255, 255, 0.9)',
-                                    font: { size: 14, weight: 'bold' },
-                                    padding: { bottom: 15 }
+                                    color: 'rgba(255, 255, 255, 0.95)',
+                                    font: { size: 16, weight: 'bold' },
+                                    padding: { bottom: 20 }
                                 }
                             }
-                        }
+                        },
+                        plugins: [{
+                            id: 'barLabels',
+                            afterDatasetsDraw: function(chart) {
+                                const ctx = chart.ctx;
+                                const meta = chart.getDatasetMeta(0);
+                                
+                                meta.data.forEach((bar, index) => {
+                                    const value = latencyData[index];
+                                    const description = latencyDescriptions[index];
+                                    const x = bar.x;
+                                    const y = bar.y;
+                                    const width = bar.width;
+                                    
+                                    ctx.save();
+                                    
+                                    // 绘制描述文字
+                                    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                                    ctx.font = 'bold 13px sans-serif';
+                                    ctx.textAlign = 'left';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+                                    ctx.shadowBlur = 4;
+                                    ctx.fillText(description, x + width + 12, y);
+                                    
+                                    // 绘制数值
+                                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                                    ctx.font = '600 11px sans-serif';
+                                    ctx.fillText(`(${value}ms)`, x + width + 12, y + 18);
+                                    
+                                    ctx.restore();
+                                });
+                            }
+                        }]
                     });
                 }
             });
@@ -573,85 +778,138 @@
     <style>
         /* 区块链页面专用样式 */
         .blockchain-intro-card {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 3rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border-left: 4px solid var(--accent-color);
+            padding: 4rem 3rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(8, 72, 97, 0.15) 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-left: 5px solid var(--accent-color);
             text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blockchain-intro-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .blockchain-intro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 212, 255, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
         .blockchain-intro-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .blockchain-intro-card h2 {
             color: white;
-            font-size: 2rem;
+            font-size: 2.25rem;
             margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .blockchain-intro-card p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.9;
             font-size: 1.125rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .blockchain-intro-card strong {
             color: var(--accent-color);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
         .blockchain-feature-section {
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         .blockchain-section-header {
             display: flex;
             align-items: flex-start;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 2.5rem;
+            margin-bottom: 3.5rem;
         }
 
         .blockchain-section-header-center {
             flex-direction: column;
             text-align: center;
             align-items: center;
+            gap: 1rem;
         }
 
         .blockchain-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
+            width: 70px;
+            height: 70px;
+            font-size: 1.75rem;
             font-weight: 700;
             color: var(--accent-color);
-            background: rgba(0, 212, 255, 0.1);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
             border-radius: 50%;
             flex-shrink: 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-badge:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .blockchain-section-header h2 {
             color: var(--text-primary);
-            font-size: 2rem;
+            font-size: 2.25rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
         .bg-dark .blockchain-section-header h2 {
             color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .blockchain-section-desc {
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.9;
             font-size: 1.125rem;
+            max-width: 90%;
         }
 
         .bg-dark .blockchain-section-desc {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .blockchain-content-grid {
@@ -674,10 +932,19 @@
         }
 
         .blockchain-chart-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .blockchain-chart-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.3);
         }
 
         .blockchain-chart-large {
@@ -699,16 +966,26 @@
         }
 
         .blockchain-features-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-features-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-features-card h3 {
             color: var(--accent-color);
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             margin-bottom: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
         }
 
         .blockchain-feature-list {
@@ -721,20 +998,38 @@
             display: flex;
             gap: 1.5rem;
             align-items: flex-start;
+            padding: 1.25rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(0, 212, 255, 0.03);
+            border: 1px solid transparent;
+        }
+
+        .blockchain-feature-item:hover {
+            background: rgba(0, 212, 255, 0.08);
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateX(5px);
         }
 
         .blockchain-feature-number {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color) 0%, #00b8e6 100%);
             color: white;
             border-radius: 50%;
             font-weight: 700;
             font-size: 1.25rem;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-feature-item:hover .blockchain-feature-number {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .blockchain-feature-content h4 {
@@ -751,127 +1046,240 @@
         }
 
         .blockchain-stats-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-stats-card h3 {
             color: var(--accent-color);
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
         }
 
         .blockchain-stats-card p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.9;
             margin-bottom: 2rem;
         }
 
         .blockchain-stat-box {
             text-align: center;
-            padding: 2rem;
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border-radius: 20px;
             border: 2px solid var(--accent-color);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blockchain-stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .blockchain-stat-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .blockchain-stat-number {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            animation: countUp 1s ease-out;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .blockchain-stat-label {
             font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             text-transform: uppercase;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
         }
 
         .blockchain-process-flow {
             display: grid;
-            grid-template-columns: repeat(4, 1fr) 3fr;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .blockchain-process-step {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            text-align: center;
-            transition: all 0.3s ease;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            align-items: stretch;
             position: relative;
         }
 
+        .blockchain-process-flow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 212, 255, 0.3) 20%, 
+                rgba(0, 212, 255, 0.5) 50%, 
+                rgba(0, 212, 255, 0.3) 80%, 
+                transparent 100%);
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+
+        .blockchain-process-step {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
         .blockchain-process-step:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--accent-color);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
         }
 
         .blockchain-process-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.25rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 212, 255, 0.3));
+        }
+
+        .blockchain-process-step:hover .blockchain-process-icon {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 6px 12px rgba(0, 212, 255, 0.5));
         }
 
         .blockchain-process-number {
             position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 40px;
-            height: 40px;
-            background: var(--accent-color);
+            top: -18px;
+            right: -18px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #00b8e6 100%);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 10px rgba(0, 212, 255, 0.3);
+            font-size: 1.375rem;
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .blockchain-process-step:hover .blockchain-process-number {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .blockchain-process-step h4 {
             color: var(--accent-color);
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.75rem;
-            font-size: 1.125rem;
+            font-size: 1.25rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
         }
 
         .blockchain-process-step p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         .blockchain-process-arrow {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            text-align: center;
-            opacity: 0.6;
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .blockchain-process-flow::before {
+                display: none;
+            }
+            
+            .blockchain-process-arrow {
+                display: block;
+                font-size: 2rem;
+                color: var(--accent-color);
+                text-align: center;
+                opacity: 0.6;
+                grid-column: 1 / -1;
+            }
         }
 
         .blockchain-info-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-highlight-box {
-            background: rgba(79, 70, 229, 0.2);
-            border-left: 4px solid #4F46E5;
-            padding: 1.5rem;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(79, 70, 229, 0.15) 100%);
+            border-left: 5px solid #4F46E5;
+            padding: 2rem;
+            border-radius: 15px;
             margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-highlight-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-highlight-box h5 {
@@ -917,35 +1325,56 @@
         }
 
         .blockchain-challenge-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-left: 4px solid #EF4444;
+        }
+
+        .blockchain-challenge-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-challenge-card h3 {
             color: #EF4444;
-            font-size: 1.75rem;
+            font-size: 1.875rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
         }
 
         .blockchain-challenge-card p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.9;
             margin-bottom: 2rem;
         }
 
         .blockchain-supply-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .blockchain-supply-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .blockchain-supply-card h3 {
             color: white;
-            font-size: 1.75rem;
+            font-size: 1.875rem;
             margin-bottom: 2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .blockchain-supply-list {
@@ -958,24 +1387,43 @@
             display: flex;
             gap: 1.5rem;
             align-items: flex-start;
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: rgba(0, 212, 255, 0.03);
+            border: 1px solid transparent;
+        }
+
+        .blockchain-supply-item:hover {
+            background: rgba(0, 212, 255, 0.08);
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateX(5px);
         }
 
         .blockchain-supply-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 8px rgba(0, 212, 255, 0.3));
+        }
+
+        .blockchain-supply-item:hover .blockchain-supply-icon {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 4px 12px rgba(0, 212, 255, 0.5));
         }
 
         .blockchain-supply-content h4 {
             color: var(--accent-color);
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            font-size: 1.125rem;
+            font-size: 1.25rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
         }
 
         .blockchain-supply-content p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.95rem;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* 响应式设计 */
@@ -983,6 +1431,7 @@
             .blockchain-vpp-grid,
             .blockchain-architecture-grid {
                 grid-template-columns: 1fr;
+                gap: 2.5rem;
             }
 
             .blockchain-process-flow {
@@ -990,9 +1439,8 @@
                 gap: 2rem;
             }
 
-            .blockchain-process-arrow {
-                transform: rotate(90deg);
-                font-size: 2rem;
+            .blockchain-process-flow::before {
+                display: none;
             }
         }
 
@@ -1022,12 +1470,15 @@
 
             .blockchain-chart-card,
             .blockchain-features-card,
-            .blockchain-stats-card {
-                padding: 1.5rem;
+            .blockchain-stats-card,
+            .blockchain-info-card,
+            .blockchain-challenge-card,
+            .blockchain-supply-card {
+                padding: 2rem 1.5rem;
             }
 
             .blockchain-process-step {
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
             }
 
             .chart-container {
@@ -1036,6 +1487,10 @@
 
             .blockchain-chart-large .chart-container {
                 height: 300px;
+            }
+
+            .blockchain-intro-card {
+                padding: 3rem 2rem;
             }
         }
 
