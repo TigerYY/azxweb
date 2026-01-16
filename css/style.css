@@ -176,6 +176,40 @@ img {
     text-align: center;
 }
 
+/* 按钮组容器 - 确保按钮水平排列 */
+.text-center:has(.btn) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+/* 桌面端确保按钮尽量同行 */
+@media (min-width: 769px) {
+    .text-center:has(.btn) {
+        flex-wrap: nowrap;
+    }
+    
+    .text-center:has(.btn) .btn {
+        flex: 0 1 auto;
+        min-width: fit-content;
+    }
+}
+
+/* 兼容不支持 :has() 的浏览器 - 使用相邻选择器 */
+.text-center .btn + .btn {
+    margin-left: 0;
+}
+
+/* 移动端允许按钮换行 */
+@media (max-width: 768px) {
+    .text-center:has(.btn) {
+        flex-wrap: wrap;
+    }
+}
+
 /* ============================================
    导航栏 - Floating Glass Bar
    ============================================ */
@@ -325,6 +359,15 @@ img {
     overflow: hidden;
 }
 
+.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
 /* Three.js 容器 */
 #three-hero-container {
     position: absolute;
@@ -363,7 +406,9 @@ img {
     z-index: 10;
     text-align: center;
     max-width: 1200px;
+    width: 100%;
     padding: 0 var(--spacing-lg);
+    margin: 0 auto;
 }
 
 .hero-logo {
@@ -573,19 +618,20 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2.5rem;
+    padding: 1rem 2rem;
     border-radius: 0;
     font-family: var(--font-body);
     font-size: var(--body-size);
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 1;
     cursor: pointer;
     line-height: 1.5;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
-    min-width: 160px;
 }
 
 .btn::before {
@@ -1789,8 +1835,13 @@ a.feature-card:focus-visible {
         padding: var(--spacing-3xl) 0;
     }
     
+    .hero .container {
+        padding: 0 var(--spacing-lg);
+    }
+    
     .hero-content {
         max-width: 100%;
+        width: 100%;
     }
     
     .hero-buttons {
@@ -1861,6 +1912,14 @@ a.feature-card:focus-visible {
     /* Hero */
     .hero {
         min-height: 100vh;
+    }
+    
+    .hero .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-sm);
     }
     
     .hero-overline {

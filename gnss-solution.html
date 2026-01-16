@@ -121,17 +121,17 @@
                     <p class="gnss-kpi-desc">RTK载波相位差分技术，实现毫米级微形变捕捉。</p>
                 </div>
 
-                <div class="gnss-kpi-card" style="border-top-color: #10b981;">
+                <div class="gnss-kpi-card gnss-kpi-card-green">
                     <div class="gnss-kpi-label">全天候运行能力</div>
-                    <div class="gnss-kpi-value" style="color: #10b981;">
+                    <div class="gnss-kpi-value gnss-kpi-value-green">
                         24<span class="gnss-kpi-unit">h</span>
                     </div>
                     <p class="gnss-kpi-desc">无惧雨雪雾霾，不仅限于白昼，提供不间断的数据流。</p>
                 </div>
 
-                <div class="gnss-kpi-card" style="border-top-color: #f59e0b;">
+                <div class="gnss-kpi-card gnss-kpi-card-orange">
                     <div class="gnss-kpi-label">预警响应速度</div>
-                    <div class="gnss-kpi-value" style="color: #f59e0b;">
+                    <div class="gnss-kpi-value gnss-kpi-value-orange">
                         &lt;3<span class="gnss-kpi-unit">s</span>
                     </div>
                     <p class="gnss-kpi-desc">数据解算完成即刻触发预警，秒级推送至管理终端。</p>
@@ -145,11 +145,11 @@
         <div class="container">
             <div class="gnss-chart-section">
                 <div class="gnss-chart-content">
-                    <h2 class="gnss-section-title" style="color: white;">形变趋势实时追踪</h2>
-                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+                    <h2 class="gnss-section-title">形变趋势实时追踪</h2>
+                    <p class="gnss-section-desc gnss-section-desc-dark">
                         上图展示了某重点监测点位（TP-03）在过去30天内的三维位移累积变化。
                     </p>
-                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">
+                    <p class="gnss-section-desc gnss-section-desc-dark gnss-section-desc-spacing">
                         传统人工测量受天气和光照限制，数据呈离散状。GNSS自动化系统生成的曲线连续平滑，能够捕捉到突发性的加速形变趋势（如图中第22-24天出现的降雨后位移加速），为撤离决策争取宝贵时间。
                     </p>
                     <div class="gnss-highlight-box">
@@ -190,9 +190,9 @@
     <!-- 系统运行全流程解析 -->
     <section class="section-padding bg-dark">
         <div class="container">
-            <div class="gnss-intro-section" style="text-align: center;">
-                <h2 class="gnss-section-title" style="color: white;">系统运行全流程解析</h2>
-                <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9);">
+            <div class="gnss-intro-section gnss-intro-section-center">
+                <h2 class="gnss-section-title">系统运行全流程解析</h2>
+                <p class="gnss-section-desc gnss-section-desc-dark">
                     从卫星信号采集到最终的预警发布，系统实现了全链路的自动化处理，消除了人为误差。
                 </p>
             </div>
@@ -606,6 +606,18 @@
             font-size: 1.125rem;
         }
 
+        .gnss-section-desc-dark {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .gnss-section-desc-spacing {
+            margin-bottom: 1.5rem;
+        }
+
+        .gnss-intro-section-center {
+            text-align: center;
+        }
+
         .gnss-kpi-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -614,18 +626,34 @@
         }
 
         .gnss-kpi-card {
-            background: white;
+            background: linear-gradient(
+                135deg,
+                rgba(26, 31, 58, 0.8),
+                rgba(26, 31, 58, 0.6)
+            );
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
             border-top: 4px solid var(--accent-color);
             text-align: center;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .gnss-kpi-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: rgba(100, 255, 218, 0.4);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .gnss-kpi-card-green {
+            border-top-color: #10b981;
+        }
+
+        .gnss-kpi-card-orange {
+            border-top-color: #f59e0b;
         }
 
         .gnss-kpi-label {
@@ -642,6 +670,14 @@
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
+        }
+
+        .gnss-kpi-value-green {
+            color: #10b981;
+        }
+
+        .gnss-kpi-value-orange {
+            color: #f59e0b;
         }
 
         .gnss-kpi-unit {
@@ -782,10 +818,23 @@
         }
 
         .gnss-comparison-card {
-            background: white;
+            background: linear-gradient(
+                135deg,
+                rgba(26, 31, 58, 0.8),
+                rgba(26, 31, 58, 0.6)
+            );
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gnss-comparison-card:hover {
+            border-color: rgba(100, 255, 218, 0.4);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .gnss-comparison-title {

@@ -121,17 +121,17 @@
                     <p class="gnss-kpi-desc">RTK carrier-phase differential positioning enables millimeter-level deformation detection.</p>
                 </div>
 
-                <div class="gnss-kpi-card" style="border-top-color: #10b981;">
+                <div class="gnss-kpi-card gnss-kpi-card-green">
                     <div class="gnss-kpi-label">All-weather Operation</div>
-                    <div class="gnss-kpi-value" style="color: #10b981;">
+                    <div class="gnss-kpi-value gnss-kpi-value-green">
                         24<span class="gnss-kpi-unit">h</span>
                     </div>
                     <p class="gnss-kpi-desc">Works in rain, snow and fog—day and night—providing an uninterrupted data stream.</p>
                 </div>
 
-                <div class="gnss-kpi-card" style="border-top-color: #f59e0b;">
+                <div class="gnss-kpi-card gnss-kpi-card-orange">
                     <div class="gnss-kpi-label">Alert Response Time</div>
-                    <div class="gnss-kpi-value" style="color: #f59e0b;">
+                    <div class="gnss-kpi-value gnss-kpi-value-orange">
                         &lt;3<span class="gnss-kpi-unit">s</span>
                     </div>
                     <p class="gnss-kpi-desc">Alerts are triggered immediately after processing and pushed to management terminals within seconds.</p>
@@ -145,11 +145,11 @@
         <div class="container">
             <div class="gnss-chart-section">
                 <div class="gnss-chart-content">
-                    <h2 class="gnss-section-title" style="color: white;">Real-time Deformation Trend Tracking</h2>
-                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+                    <h2 class="gnss-section-title">Real-time Deformation Trend Tracking</h2>
+                    <p class="gnss-section-desc gnss-section-desc-dark">
                         The chart above shows the cumulative 3D displacement at a key monitoring point (TP-03) over the past 30 days.
                     </p>
-                    <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">
+                    <p class="gnss-section-desc gnss-section-desc-dark gnss-section-desc-spacing">
                         Manual surveys are constrained by weather and lighting, producing discrete data. GNSS automation generates continuous and smooth curves and can capture sudden acceleration trends (e.g., post-rain displacement acceleration around days 22–24), buying valuable time for evacuation decisions.
                     </p>
                     <div class="gnss-highlight-box">
@@ -190,9 +190,9 @@
     <!-- 系统运行全流程解析 -->
     <section class="section-padding bg-dark">
         <div class="container">
-            <div class="gnss-intro-section" style="text-align: center;">
-                <h2 class="gnss-section-title" style="color: white;">End-to-end Workflow</h2>
-                <p class="gnss-section-desc" style="color: rgba(255,255,255,0.9);">
+            <div class="gnss-intro-section gnss-intro-section-center">
+                <h2 class="gnss-section-title">End-to-end Workflow</h2>
+                <p class="gnss-section-desc gnss-section-desc-dark">
                     From satellite signal acquisition to final alert delivery, the system automates the entire pipeline and minimizes human error.
                 </p>
             </div>
@@ -606,6 +606,18 @@
             font-size: 1.125rem;
         }
 
+        .gnss-section-desc-dark {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .gnss-section-desc-spacing {
+            margin-bottom: 1.5rem;
+        }
+
+        .gnss-intro-section-center {
+            text-align: center;
+        }
+
         .gnss-kpi-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -614,18 +626,34 @@
         }
 
         .gnss-kpi-card {
-            background: white;
+            background: linear-gradient(
+                135deg,
+                rgba(26, 31, 58, 0.8),
+                rgba(26, 31, 58, 0.6)
+            );
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
             border-top: 4px solid var(--accent-color);
             text-align: center;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .gnss-kpi-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: rgba(100, 255, 218, 0.4);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .gnss-kpi-card-green {
+            border-top-color: #10b981;
+        }
+
+        .gnss-kpi-card-orange {
+            border-top-color: #f59e0b;
         }
 
         .gnss-kpi-label {
@@ -642,6 +670,14 @@
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
+        }
+
+        .gnss-kpi-value-green {
+            color: #10b981;
+        }
+
+        .gnss-kpi-value-orange {
+            color: #f59e0b;
         }
 
         .gnss-kpi-unit {
@@ -782,10 +818,23 @@
         }
 
         .gnss-comparison-card {
-            background: white;
+            background: linear-gradient(
+                135deg,
+                rgba(26, 31, 58, 0.8),
+                rgba(26, 31, 58, 0.6)
+            );
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gnss-comparison-card:hover {
+            border-color: rgba(100, 255, 218, 0.4);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .gnss-comparison-title {
