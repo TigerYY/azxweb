@@ -77,3 +77,62 @@ window.addEventListener('load', function() {
     }, 100);
 });
 
+// 图片点击放大功能
+document.addEventListener('DOMContentLoaded', function() {
+    // 创建模态框
+    let imageModal = document.getElementById('imageModal');
+    if (!imageModal) {
+        imageModal = document.createElement('div');
+        imageModal.id = 'imageModal';
+        imageModal.className = 'image-modal';
+        imageModal.innerHTML = `
+            <div class="image-modal-content">
+                <span class="image-modal-close">&times;</span>
+                <img id="modalImage" src="" alt="">
+            </div>
+        `;
+        document.body.appendChild(imageModal);
+    }
+
+    // 获取模态框元素
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = imageModal.querySelector('.image-modal-close');
+
+    // 为所有产品详情和解决方案详情页的图片添加点击事件
+    const detailImages = document.querySelectorAll('.solution-detail-image img, .product-detail-image img');
+    
+    detailImages.forEach(function(img) {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function() {
+            modalImg.src = this.src;
+            modalImg.alt = this.alt || '';
+            imageModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+    });
+
+    // 关闭模态框
+    function closeModal() {
+        imageModal.classList.remove('active');
+        document.body.style.overflow = ''; // 恢复滚动
+    }
+
+    // 点击关闭按钮
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    // 点击背景关闭
+    imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal) {
+            closeModal();
+        }
+    });
+
+    // ESC 键关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+});

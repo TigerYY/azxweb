@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Substation Solution Illustration</title>
+  <desc id="desc">Deep blue tech-style illustration: Substation master control, equipment status monitoring and alarm linkage visualization</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1A1F3A"/>
+      <stop offset="1" stop-color="#252B4A"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glowCyan" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 280) rotate(90) scale(240 280)">
+      <stop stop-color="rgba(100,255,218,0.18)"/>
+      <stop offset="1" stop-color="rgba(100,255,218,0)"/>
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 520) rotate(90) scale(260 300)">
+      <stop stop-color="rgba(59,130,246,0.18)"/>
+      <stop offset="1" stop-color="rgba(59,130,246,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.55 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" rx="20" fill="url(#bg)"/>
+  <rect width="800" height="800" rx="20" fill="url(#grid)"/>
+  <rect width="800" height="800" rx="20" fill="url(#glowCyan)"/>
+  <rect width="800" height="800" rx="20" fill="url(#glowBlue)"/>
+
+  <!-- Top label -->
+  <g opacity="0.92">
+    <text x="48" y="56" fill="rgba(229,229,229,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16" letter-spacing="2">
+      SMART SUBSTATION
+    </text>
+    <text x="48" y="80" fill="rgba(153,153,153,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14">
+      Status Monitoring · Fault Warning · Remote O&amp;M · Data Intelligence
+    </text>
+  </g>
+
+  <!-- Backbone network -->
+  <g stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+    <path d="M150 320C280 240 400 220 480 280C560 340 640 360 700 320" stroke="rgba(100,255,218,0.55)" stroke-width="2.5"/>
+    <path d="M150 320C280 240 400 220 480 280C560 340 640 360 700 320" stroke="rgba(100,255,218,0.18)" stroke-width="8" filter="url(#softGlow)"/>
+
+    <path d="M280 280C260 360 240 420 200 480" stroke="rgba(59,130,246,0.55)" stroke-width="2"/>
+    <path d="M400 260C400 340 400 400 400 480" stroke="rgba(59,130,246,0.55)" stroke-width="2"/>
+    <path d="M520 300C560 360 600 400 640 480" stroke="rgba(59,130,246,0.55)" stroke-width="2"/>
+  </g>
+
+  <!-- Nodes -->
+  <g filter="url(#softGlow)">
+    <circle cx="150" cy="320" r="10" fill="#64FFDA"/>
+    <circle cx="280" cy="280" r="8" fill="#64FFDA"/>
+    <circle cx="400" cy="260" r="8" fill="#64FFDA"/>
+    <circle cx="480" cy="280" r="8" fill="#64FFDA"/>
+    <circle cx="520" cy="300" r="8" fill="#64FFDA"/>
+    <circle cx="700" cy="320" r="10" fill="#64FFDA"/>
+    <circle cx="150" cy="320" r="18" fill="rgba(100,255,218,0.14)"/>
+    <circle cx="700" cy="320" r="18" fill="rgba(100,255,218,0.14)"/>
+  </g>
+
+  <!-- Substation cabinet -->
+  <g transform="translate(180 480)">
+    <rect x="0" y="0" width="90" height="100" rx="14" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+    <path d="M24 26H66M24 44H66M24 62H66" stroke="#64FFDA" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M24 78H66" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="30" cy="84" r="3" fill="#3B82F6"/>
+    <circle cx="45" cy="84" r="3" fill="#3B82F6"/>
+    <circle cx="60" cy="84" r="3" fill="#3B82F6"/>
+    <text x="8" y="120" fill="rgba(229,229,229,0.85)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">Switchgear/Protection</text>
+  </g>
+
+  <!-- Condition monitoring -->
+  <g transform="translate(360 520)">
+    <rect x="0" y="0" width="80" height="72" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+    <path d="M16 48C22 38 30 38 36 48C42 58 50 58 58 48" stroke="#3B82F6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M16 28H62" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="28" cy="28" r="2.5" fill="#64FFDA"/>
+    <circle cx="40" cy="28" r="2.5" fill="#64FFDA"/>
+    <circle cx="52" cy="28" r="2.5" fill="#64FFDA"/>
+    <text x="8" y="90" fill="rgba(229,229,229,0.85)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">Status Monitor</text>
+  </g>
+
+  <!-- Alarm marker -->
+  <g transform="translate(600 520)">
+    <rect x="0" y="0" width="84" height="72" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+    <path d="M42 18L60 54H24L42 18Z" fill="rgba(100,255,218,0.10)" stroke="#64FFDA" stroke-width="2"/>
+    <path d="M42 30V40" stroke="#64FFDA" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="42" cy="46" r="2.5" fill="#64FFDA"/>
+    <text x="8" y="90" fill="rgba(229,229,229,0.85)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">Fault Warning</text>
+  </g>
+
+  <!-- KPI pills -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12">
+    <g transform="translate(400 110)">
+      <rect x="0" y="0" width="140" height="30" rx="999" fill="rgba(100,255,218,0.10)" stroke="rgba(100,255,218,0.35)"/>
+      <text x="14" y="20" fill="rgba(229,229,229,0.92)">Alarm Convergence &lt; 10s</text>
+    </g>
+    <g transform="translate(552 110)">
+      <rect x="0" y="0" width="140" height="30" rx="999" fill="rgba(59,130,246,0.10)" stroke="rgba(59,130,246,0.35)"/>
+      <text x="14" y="20" fill="rgba(229,229,229,0.92)">Status Coverage ≥ 95%</text>
+    </g>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12" transform="translate(48 110)">
+    <rect x="0" y="0" width="130" height="30" rx="999" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.16)"/>
+    <text x="14" y="20" fill="rgba(229,229,229,0.92)">Remote O&amp;M Loop</text>
+  </g>
+
+  <!-- Bottom tag -->
+  <g opacity="0.92">
+    <rect x="48" y="720" width="280" height="44" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)"/>
+    <text x="64" y="748" fill="rgba(229,229,229,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14" font-weight="700">
+      Monitor-Warn-Dispose in One View
+    </text>
+  </g>
+</svg>

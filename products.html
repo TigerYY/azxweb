@@ -1,15 +1,75 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+    <!-- 基础 Meta 标签 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="电网物联网产品,智能配电设备,三遥终端,感知中台">
-    <meta name="description" content="安智信科技 - 专业的电网物联网产品，包括智能配电系统、三遥终端设备、感知中台等">
-    <title>产品中心 - 安智信科技</title>
-    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- SEO Meta 标签 -->
+    <meta name="description" content="安智信科技产品中心 - 提供智能配电监控系统、三遥终端设备、数据采集终端、智能网关、感知中台等专业电网物联网产品。">
+    <meta name="keywords" content="智能配电系统,三遥终端,遥测遥信遥控,数据采集,智能网关,感知中台,电网物联网产品">
+    <meta name="author" content="广州安智信科技有限公司">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aztcon.com/products.html">
+    <meta property="og:title" content="产品中心 - 智能配电与三遥系统 | 安智信科技">
+    <meta property="og:description" content="提供智能配电监控系统、三遥终端设备等专业电网物联网产品">
+    <meta property="og:image" content="https://www.aztcon.com/images/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.aztcon.com/products.html">
+    <meta name="twitter:title" content="产品中心 - 智能配电与三遥系统 | 安智信科技">
+    <meta name="twitter:description" content="提供智能配电监控系统、三遥终端设备等专业电网物联网产品">
+    <meta name="twitter:image" content="https://www.aztcon.com/images/logo.png">
+    
+    <!-- 页面标题 -->
+    <title>产品中心 - 智能配电与三遥系统 | 安智信科技</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://www.aztcon.com/products.html">
+    <link rel="alternate" hreflang="en" href="https://www.aztcon.com/en/products.html">
+
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- 性能优化 -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" href="css/style.css" as="style">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- 主题颜色 -->
+    <meta name="theme-color" content="#1a1f3a">
+    <meta name="msapplication-TileColor" content="#1a1f3a">
+    
+    <!-- 安全相关 -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <!-- 结构化数据 (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product Collection",
+      "name": "电网物联网产品系列",
+      "url": "https://www.aztcon.com/products.html",
+      "provider": {
+        "@type": "Organization",
+        "name": "广州安智信科技有限公司"
+      },
+      "description": "智能配电监控系统、三遥终端设备、数据采集终端、智能网关、感知中台等专业电网物联网产品"
+    }
+    </script>
 </head>
+
 <body>
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar">
@@ -17,7 +77,7 @@
             <div class="nav-wrapper">
                 <div class="logo">
                     <a href="index.html">
-                        <img src="images/logo.png" alt="安智信科技" class="logo-img">
+                        <img src="images/logo_bright_custom.png" alt="安智信科技" class="logo-img">
                         <span class="logo-text">安智信科技</span>
                     </a>
                 </div>
@@ -32,124 +92,67 @@
                     <li><a href="solutions.html">解决方案</a></li>
                     <li><a href="about.html">关于我们</a></li>
                     <li><a href="contact.html">联系我们</a></li>
+
                 </ul>
+                <div class="lang-switch" aria-label="Language switch">
+                    <a href="products.html" class="lang-btn active" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a>
+                    <a href="en/products.html" class="lang-btn" lang="en" hreflang="en">EN</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 页面标题 -->
-    <section class="page-header section-padding" style="padding-top: 120px; background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%); color: white;">
+    <!-- Hero 区域 -->
+    <section class="hero hero-minimal">
         <div class="container">
-            <h1 class="section-title" style="color: white; margin-bottom: 1rem;">产品中心</h1>
-            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">专业的电网物联网产品线</p>
-        </div>
-    </section>
-
-    <!-- 智能配电监控系统 -->
-    <section class="section-padding" id="smart-power">
-        <div class="container">
-            <div class="product-detail">
-                <div class="product-detail-image">
-                    <img src="images/products/smart-power-system.png" alt="智能配电监控系统" class="product-image" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
-                </div>
-                <div class="product-detail-content">
-                    <h2>智能配电监控系统</h2>
-                    <p class="product-intro">先进的智能配电监控系统，实现对配电设备的全方位监测、智能分析和远程控制，提升供电可靠性和运维效率。</p>
-                    <div class="product-features">
-                        <h3>核心功能</h3>
-                        <ul>
-                            <li>实时监测配电设备运行状态</li>
-                            <li>智能故障预警与诊断</li>
-                            <li>远程控制与操作</li>
-                            <li>能耗分析与优化</li>
-                            <li>历史数据查询与分析</li>
-                            <li>多级报警机制</li>
-                        </ul>
-                    </div>
-                    <div class="product-specs">
-                        <h3>技术特点</h3>
-                        <ul>
-                            <li>支持多种通信协议（Modbus、IEC61850等）</li>
-                            <li>高精度数据采集（精度±0.2%）</li>
-                            <li>响应时间 < 1秒</li>
-                            <li>支持云端部署和本地部署</li>
-                            <li>7×24小时不间断运行</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="hero-minimal-content">
+                <h1 class="hero-minimal-title">产品中心</h1>
+                <p class="hero-minimal-subtitle">专业的电网物联网产品线</p>
             </div>
         </div>
     </section>
 
-    <!-- 三遥终端设备 -->
-    <section class="section-padding bg-dark" id="three-remote">
+    <!-- 核心产品概览（卡片） -->
+    <section class="section-padding-small">
         <div class="container">
-            <div class="product-detail" style="flex-direction: row-reverse;">
-                <div class="product-detail-image">
-                    <img src="images/products/three-remote-terminal.png" alt="三遥终端设备" class="product-image" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
-                </div>
-                <div class="product-detail-content" style="color: white;">
-                    <h2 style="color: white;">三遥终端设备</h2>
-                    <p class="product-intro" style="color: rgba(255,255,255,0.9);">高可靠性的遥测、遥信、遥控一体化终端设备，支持多种通信方式，广泛应用于电力系统监控。</p>
-                    <div class="product-features">
-                        <h3 style="color: white;">核心功能</h3>
-                        <ul>
-                            <li>遥测：实时采集电压、电流、功率等参数</li>
-                            <li>遥信：监测开关状态、保护动作等信号</li>
-                            <li>遥控：远程控制开关分合、设备启停</li>
-                            <li>数据存储与转发</li>
-                            <li>故障自诊断</li>
-                            <li>多通信接口（4G/5G、以太网、串口等）</li>
-                        </ul>
-                    </div>
-                    <div class="product-specs">
-                        <h3 style="color: white;">技术特点</h3>
-                        <ul>
-                            <li>工业级设计，工作温度-40℃~+85℃</li>
-                            <li>支持多种规约（IEC101/104、Modbus等）</li>
-                            <li>数据采集周期可配置（1秒~1小时）</li>
-                            <li>内置大容量存储（支持本地存储30天数据）</li>
-                            <li>低功耗设计，支持备用电源</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="section-header">
+                <h2 class="section-title">核心产品</h2>
+                <p class="section-subtitle">点击查看完整图文详情</p>
             </div>
-        </div>
-    </section>
 
-    <!-- 感知中台系统 -->
-    <section class="section-padding" id="sensing-platform">
-        <div class="container">
-            <div class="product-detail">
-                <div class="product-detail-image">
-                    <img src="images/products/sensing-platform.png" alt="感知中台系统" class="product-image" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
-                </div>
-                <div class="product-detail-content">
-                    <h2>感知中台系统</h2>
-                    <p class="product-intro">统一的数据感知与处理中台，提供强大的数据接入、处理、分析和应用能力，支撑各类物联网应用场景。</p>
-                    <div class="product-features">
-                        <h3>核心功能</h3>
-                        <ul>
-                            <li>多源数据统一接入</li>
-                            <li>实时数据处理与流式计算</li>
-                            <li>数据融合与关联分析</li>
-                            <li>设备管理与状态监控</li>
-                            <li>API接口服务</li>
-                            <li>可视化数据展示</li>
-                        </ul>
+            <div class="products-grid">
+                <a class="product-card" href="product-smart-power-system.html" aria-label="查看智能配电系统详情">
+                    <div class="product-image">
+                        <img src="images/products/smart-power-system.svg" alt="智能配电系统" loading="lazy">
                     </div>
-                    <div class="product-specs">
-                        <h3>技术特点</h3>
-                        <ul>
-                            <li>支持百万级设备接入</li>
-                            <li>毫秒级数据处理延迟</li>
-                            <li>分布式架构，高可用设计</li>
-                            <li>支持时序数据库存储</li>
-                            <li>灵活的规则引擎配置</li>
-                            <li>标准RESTful API接口</li>
-                        </ul>
+                    <div class="product-content">
+                        <h3>智能配电系统</h3>
+                        <p>设备状态可视、故障更早发现、运维更高效</p>
+                        <span class="product-link" aria-hidden="true">了解更多 →</span>
                     </div>
-                </div>
+                </a>
+
+                <a class="product-card" href="product-three-remote-system.html" aria-label="查看三遥系统详情">
+                    <div class="product-image">
+                        <img src="images/products/three-remote-terminal.svg" alt="三遥系统" loading="lazy">
+                    </div>
+                    <div class="product-content">
+                        <h3>三遥系统</h3>
+                        <p>遥测、遥信、遥控一体化，现场更可控</p>
+                        <span class="product-link" aria-hidden="true">了解更多 →</span>
+                    </div>
+                </a>
+
+                <a class="product-card" href="product-sensing-platform.html" aria-label="查看感知中台详情">
+                    <div class="product-image">
+                        <img src="images/products/sensing-platform.svg" alt="感知中台" loading="lazy">
+                    </div>
+                    <div class="product-content">
+                        <h3>感知中台</h3>
+                        <p>统一接入、治理与服务输出，让数据更可用</p>
+                        <span class="product-link" aria-hidden="true">了解更多 →</span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -161,145 +164,91 @@
                 <h2 class="section-title">其他产品</h2>
                 <p class="section-subtitle">更多专业产品与服务</p>
             </div>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="images/products/smart-gateway.png" alt="智能网关设备" style="width: 100%; height: 200px; object-fit: cover;">
+            <div class="features-grid">
+                <a class="feature-card feature-card-link" href="product-smart-gateway.html" aria-label="查看智能网关设备详情">
+                    <div class="feature-thumb">
+                        <img src="images/products/smart-gateway.svg" alt="智能网关设备" loading="lazy">
                     </div>
-                    <div class="product-content">
-                        <h3>智能网关设备</h3>
-                        <p>边缘计算网关，支持协议转换、数据预处理和边缘分析</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="images/products/data-collection.png" alt="数据采集终端" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3>智能网关设备</h3>
+                    <p>边缘计算网关，支持协议转换、数据预处理和边缘分析能力。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="product-data-collection.html" aria-label="查看数据采集终端详情">
+                    <div class="feature-thumb">
+                        <img src="images/products/data-collection.svg" alt="数据采集终端" loading="lazy">
                     </div>
-                    <div class="product-content">
-                        <h3>数据采集终端</h3>
-                        <p>高精度数据采集终端，支持多种传感器接入</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                        </svg>
                     </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="images/products/maintenance-platform.png" alt="运维管理平台" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3>数据采集终端</h3>
+                    <p>高精度数据采集终端，支持多种传感器接入与高频采样。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="product-maintenance-platform.html" aria-label="查看运维管理平台详情">
+                    <div class="feature-thumb">
+                        <img src="images/products/maintenance-platform.svg" alt="运维管理平台" loading="lazy">
                     </div>
-                    <div class="product-content">
-                        <h3>运维管理平台</h3>
-                        <p>设备运维管理平台，提供设备全生命周期管理</p>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
                     </div>
-                </div>
+                    <h3>运维管理平台</h3>
+                    <p>设备运维管理平台，提供设备全生命周期管理、巡检与工单流转。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="footer">
+    <footer class="footer footer-compact">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="安智信科技" class="footer-logo-img">
-                    </div>
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="images/logo_bright_custom.png" alt="安智信科技" class="footer-logo">
                     <h3>安智信科技</h3>
                     <p>专业的电网行业物联网产品和解决方案供应商</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
                     <h4>快速链接</h4>
                     <ul>
                         <li><a href="index.html">首页</a></li>
                         <li><a href="products.html">产品中心</a></li>
                         <li><a href="solutions.html">解决方案</a></li>
                         <li><a href="about.html">关于我们</a></li>
-                        <li><a href="contact.html">联系我们</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-contact">
                     <h4>联系方式</h4>
-                    <ul>
-                        <li>地址：广州市黄埔区神舟路9号4栋321室</li>
-                        <li>电话：400-691-1891</li>
-                        <li>邮编：510000</li>
-                    </ul>
+                    <p>📍 广州市黄埔区神舟路9号4栋321室</p>
+                    <p>📞 400-691-1891</p>
+                    <p>📮 510000</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 广州安智信科技有限公司 | 
-                    <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备20002948号</a>
+                <p>&copy; 2025 广州安智信科技有限公司 |
+                    <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">粤ICP备20002948号</a>
                 </p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
-    <style>
-        .product-detail {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .product-detail-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .product-intro {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .product-features,
-        .product-specs {
-            margin-bottom: 2rem;
-        }
-
-        .product-features h3,
-        .product-specs h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .product-features ul,
-        .product-specs ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .product-features li,
-        .product-specs li {
-            padding: 0.75rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .product-features li::before,
-        .product-specs li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .product-detail {
-                grid-template-columns: 1fr;
-            }
-
-            .product-detail-image {
-                order: -1;
-            }
-        }
-    </style>
 </body>
-</html>
 
+</html>

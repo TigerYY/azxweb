@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+    <!-- 基础 Meta 标签 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="电网解决方案,智能变电站,配电网智能化,新能源接入">
-    <meta name="description" content="安智信科技 - 专业的电网行业解决方案，包括智能变电站、配电网智能化、新能源接入等">
-    <title>解决方案 - 安智信科技</title>
-    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- SEO Meta 标签 -->
+    <meta name="description" content="安智信科技行业解决方案 - 提供智能变电站、配电网智能化、新能源接入、区块链智能电网、GNSS监测等定制化解决方案。">
+    <meta name="keywords" content="智能变电站,配电网智能化,新能源接入,区块链电网,GNSS监测,电网解决方案,智慧电网">
+    <meta name="author" content="广州安智信科技有限公司">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aztcon.com/solutions.html">
+    <meta property="og:title" content="行业解决方案 - 智能电网物联网 | 安智信科技">
+    <meta property="og:description" content="为电网行业提供智能变电站、配电网智能化等定制化解决方案">
+    <meta property="og:image" content="https://www.aztcon.com/images/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.aztcon.com/solutions.html">
+    <meta name="twitter:title" content="行业解决方案 - 智能电网物联网 | 安智信科技">
+    <meta name="twitter:description" content="为电网行业提供智能变电站、配电网智能化等定制化解决方案">
+    <meta name="twitter:image" content="https://www.aztcon.com/images/logo.png">
+    
+    <!-- 页面标题 -->
+    <title>行业解决方案 - 智能电网物联网 | 安智信科技</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://www.aztcon.com/solutions.html">
+    <link rel="alternate" hreflang="en" href="https://www.aztcon.com/en/solutions.html">
+
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- 性能优化 -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" href="css/style.css" as="style">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- 主题颜色 -->
+    <meta name="theme-color" content="#1a1f3a">
+    <meta name="msapplication-TileColor" content="#1a1f3a">
+    
+    <!-- 安全相关 -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="no-referrer-when-downgrade">
 </head>
+
 <body>
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar">
@@ -17,10 +62,11 @@
             <div class="nav-wrapper">
                 <div class="logo">
                     <a href="index.html">
-                        <img src="images/logo.png" alt="安智信科技" class="logo-img">
+                        <img src="images/logo_bright_custom.png" alt="安智信科技" class="logo-img">
                         <span class="logo-text">安智信科技</span>
                     </a>
                 </div>
+                <!-- Mobile Toggle -->
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
                     <span></span>
                     <span></span>
@@ -32,48 +78,55 @@
                     <li><a href="solutions.html" class="active">解决方案</a></li>
                     <li><a href="about.html">关于我们</a></li>
                     <li><a href="contact.html">联系我们</a></li>
+
                 </ul>
+                <div class="lang-switch" aria-label="Language switch">
+                    <a href="solutions.html" class="lang-btn active" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a>
+                    <a href="en/solutions.html" class="lang-btn" lang="en" hreflang="en">EN</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 页面标题 -->
-    <section class="page-header section-padding" style="padding-top: 120px; background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%); color: white;">
+    <!-- Hero 区域 -->
+    <section class="hero hero-minimal">
         <div class="container">
-            <h1 class="section-title" style="color: white; margin-bottom: 1rem;">行业解决方案</h1>
-            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">为不同场景提供定制化解决方案</p>
+            <div class="hero-minimal-content">
+                <h1 class="hero-minimal-title">行业解决方案</h1>
+                <p class="hero-minimal-subtitle">为不同场景提供定制化解决方案</p>
+            </div>
         </div>
     </section>
 
     <!-- 智能变电站解决方案 -->
-    <section class="section-padding">
+    <section class="section-padding" id="smart-substation">
         <div class="container">
             <div class="solution-detail">
                 <div class="solution-detail-content">
                     <div class="solution-badge">01</div>
                     <h2>智能变电站解决方案</h2>
                     <p class="solution-intro">变电站智能化改造方案，通过物联网技术实现设备状态实时监测、故障预警和远程控制，提升变电站运行效率和可靠性。</p>
-                    
+
                     <div class="solution-advantages">
                         <h3>方案优势</h3>
                         <div class="advantages-grid">
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>设备状态监测</h4>
                                 <p>实时监测变压器、开关柜等关键设备运行状态</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>故障预警系统</h4>
                                 <p>基于AI算法的故障预测，提前发现潜在问题</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>远程运维管理</h4>
                                 <p>支持远程操作和运维，减少现场作业</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>数据智能分析</h4>
                                 <p>历史数据深度挖掘，优化运行策略</p>
                             </div>
@@ -91,93 +144,93 @@
                     </div>
                 </div>
                 <div class="solution-detail-image">
-                    <img src="images/solutions/smart-substation.png" alt="智能变电站解决方案" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
+                    <img src="images/solutions/smart-substation.svg" alt="智能变电站解决方案" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 配电网智能化解决方案 -->
-    <section class="section-padding bg-dark">
+    <section class="section-padding bg-dark" id="smart-distribution">
         <div class="container">
-            <div class="solution-detail" style="flex-direction: row-reverse;">
-                <div class="solution-detail-content" style="color: white;">
+            <div class="solution-detail" style="direction: rtl;"> <!-- Using visual reversal trick or flex-order -->
+                <div class="solution-detail-content" style="direction: ltr;">
                     <div class="solution-badge">02</div>
-                    <h2 style="color: white;">配电网智能化解决方案</h2>
-                    <p class="solution-intro" style="color: rgba(255,255,255,0.9);">配电网智能化升级方案，通过智能监控、负荷预测和故障快速定位，提升供电可靠性和运维效率。</p>
-                    
+                    <h2>配电网智能化解决方案</h2>
+                    <p class="solution-intro">配电网智能化升级方案，通过智能监控、负荷预测和故障快速定位，提升供电可靠性和运维效率。</p>
+
                     <div class="solution-advantages">
-                        <h3 style="color: white;">方案优势</h3>
+                        <h3>方案优势</h3>
                         <div class="advantages-grid">
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
-                                <h4 style="color: white;">智能配电监控</h4>
-                                <p style="color: rgba(255,255,255,0.8);">全方位监控配电网运行状态</p>
+                                <div class="advantage-icon">➜</div>
+                                <h4>智能配电监控</h4>
+                                <p>全方位监控配电网运行状态</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
-                                <h4 style="color: white;">负荷预测分析</h4>
-                                <p style="color: rgba(255,255,255,0.8);">基于历史数据的负荷预测</p>
+                                <div class="advantage-icon">➜</div>
+                                <h4>负荷预测分析</h4>
+                                <p>基于历史数据的负荷预测</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
-                                <h4 style="color: white;">故障快速定位</h4>
-                                <p style="color: rgba(255,255,255,0.8);">快速定位故障点，缩短停电时间</p>
+                                <div class="advantage-icon">➜</div>
+                                <h4>故障快速定位</h4>
+                                <p>快速定位故障点，缩短停电时间</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
-                                <h4 style="color: white;">电能质量监测</h4>
-                                <p style="color: rgba(255,255,255,0.8);">实时监测电能质量指标</p>
+                                <div class="advantage-icon">➜</div>
+                                <h4>电能质量监测</h4>
+                                <p>实时监测电能质量指标</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="solution-applications">
-                        <h3 style="color: white;">应用场景</h3>
+                        <h3>应用场景</h3>
                         <ul>
-                            <li style="color: rgba(255,255,255,0.9);">10kV配电网智能化改造</li>
-                            <li style="color: rgba(255,255,255,0.9);">配电网自动化系统建设</li>
-                            <li style="color: rgba(255,255,255,0.9);">配电网故障诊断与处理</li>
-                            <li style="color: rgba(255,255,255,0.9);">配电网运维管理优化</li>
+                            <li>10kV配电网智能化改造</li>
+                            <li>配电网自动化系统建设</li>
+                            <li>配电网故障诊断与处理</li>
+                            <li>配电网运维管理优化</li>
                         </ul>
                     </div>
                 </div>
-                <div class="solution-detail-image">
-                    <img src="images/solutions/smart-distribution.png" alt="配电网智能化解决方案" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
+                <div class="solution-detail-image" style="direction: ltr;">
+                    <img src="images/solutions/smart-distribution.svg" alt="配电网智能化解决方案" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 新能源接入解决方案 -->
-    <section class="section-padding">
+    <section class="section-padding" id="new-energy">
         <div class="container">
             <div class="solution-detail">
                 <div class="solution-detail-content">
                     <div class="solution-badge">03</div>
                     <h2>新能源接入解决方案</h2>
                     <p class="solution-intro">风电场、光伏电站等新能源接入监控方案，实现新能源发电的实时监测、并网管理和功率预测。</p>
-                    
+
                     <div class="solution-advantages">
                         <h3>方案优势</h3>
                         <div class="advantages-grid">
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>新能源监测</h4>
                                 <p>实时监测风电、光伏等新能源发电状态</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>并网管理</h4>
                                 <p>智能并网控制，确保电网安全稳定</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>功率预测</h4>
                                 <p>基于气象数据的发电功率预测</p>
                             </div>
                             <div class="advantage-item">
-                                <div class="advantage-icon">✓</div>
+                                <div class="advantage-icon">➜</div>
                                 <h4>调度优化</h4>
                                 <p>优化新能源发电调度策略</p>
                             </div>
@@ -195,259 +248,127 @@
                     </div>
                 </div>
                 <div class="solution-detail-image">
-                    <img src="images/solutions/new-energy.png" alt="新能源接入解决方案" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
+                    <img src="images/solutions/new-energy.svg" alt="新能源接入解决方案" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 其他解决方案 -->
-    <section class="section-padding">
+    <section class="section-padding bg-dark">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">更多解决方案</h2>
                 <p class="section-subtitle">覆盖更多应用场景</p>
             </div>
-            <div class="solutions-grid">
-                <div class="solution-card" style="cursor: pointer;" onclick="window.location.href='blockchain-solution.html'">
-                    <div class="solution-number">04</div>
+            <div class="features-grid"> <!-- Changed from solutions-grid to features-grid for glass cards -->
+                <a class="feature-card" href="blockchain-solution.html" aria-label="查看区块链赋能智能电网解决方案详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
                     <h3>区块链赋能智能电网</h3>
-                    <p>从中心化电网向去中心化、自动化和免信任的生态系统转型</p>
-                    <ul class="solution-features">
-                        <li>P2P能源交易</li>
-                        <li>虚拟电厂(VPP)</li>
-                        <li>智能合约自动化</li>
-                    </ul>
-                    <div style="margin-top: 1rem; color: var(--accent-color); font-weight: 600;">
-                        了解更多 →
+                    <p>从中心化电网向去中心化、自动化和免信任的生态系统转型，实现P2P能源交易与虚拟电厂。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="platform-industrial-iot.html" aria-label="查看工业互联网平台详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
                     </div>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-number">05</div>
+                    <h3>工业互联网平台</h3>
+                    <p>连接设备、数据与服务，形成统一平台能力，支撑多场景快速复制。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="solution-smart-electricity-management.html" aria-label="查看智能用电管理解决方案详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
                     <h3>智能用电管理</h3>
-                    <p>企业、园区智能用电管理方案，实现用电监测、分析和优化</p>
-                    <ul class="solution-features">
-                        <li>用电实时监测</li>
-                        <li>能耗分析</li>
-                        <li>负荷管理</li>
-                    </ul>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-number">06</div>
-                    <h3>电力设备运维</h3>
-                    <p>电力设备全生命周期运维管理方案</p>
-                    <ul class="solution-features">
-                        <li>设备台账管理</li>
-                        <li>预防性维护</li>
-                        <li>故障处理</li>
-                    </ul>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-number">07</div>
-                    <h3>智慧园区能源</h3>
-                    <p>园区综合能源管理解决方案</p>
-                    <ul class="solution-features">
-                        <li>多能互补</li>
-                        <li>能源优化</li>
-                        <li>绿色节能</li>
-                    </ul>
-                </div>
-                <div class="solution-card" style="cursor: pointer;" onclick="window.location.href='gnss-solution.html'">
-                    <div class="solution-number">08</div>
-                    <h3>矿山地表形变GNSS监测</h3>
-                    <p>利用北斗/GPS高精度定位技术，实现全天候、毫米级、无人值守监测</p>
-                    <ul class="solution-features">
-                        <li>毫米级精度</li>
-                        <li>全天候监测</li>
-                        <li>秒级预警</li>
-                    </ul>
-                    <div style="margin-top: 1rem; color: var(--accent-color); font-weight: 600;">
-                        了解更多 →
+                    <p>企业、园区智能用电管理方案，实现用电监测、分析和优化。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="solution-power-equipment-om.html" aria-label="查看电力设备运维解决方案详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                        </svg>
                     </div>
-                </div>
+                    <h3>电力设备运维</h3>
+                    <p>电力设备全生命周期运维管理方案，包含台账管理与预防性维护。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card feature-card-link" href="solution-smart-campus-energy.html" aria-label="查看智慧园区能源解决方案详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>智慧园区能源</h3>
+                    <p>园区综合能源管理解决方案，实现多能互补与绿色节能。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
+                <a class="feature-card" href="gnss-solution.html" aria-label="查看矿山GNSS监测解决方案详情">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3>矿山GNSS监测</h3>
+                    <p>利用北斗/GPS高精度定位技术，实现全天候、毫米级、无人值守的形变监测。</p>
+                    <span class="card-cta" aria-hidden="true">了解更多 →</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="footer">
+    <footer class="footer footer-compact">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="安智信科技" class="footer-logo-img">
-                    </div>
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="images/logo_bright_custom.png" alt="安智信科技" class="footer-logo">
                     <h3>安智信科技</h3>
                     <p>专业的电网行业物联网产品和解决方案供应商</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
                     <h4>快速链接</h4>
                     <ul>
                         <li><a href="index.html">首页</a></li>
                         <li><a href="products.html">产品中心</a></li>
                         <li><a href="solutions.html">解决方案</a></li>
                         <li><a href="about.html">关于我们</a></li>
-                        <li><a href="contact.html">联系我们</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-contact">
                     <h4>联系方式</h4>
-                    <ul>
-                        <li>地址：广州市黄埔区神舟路9号4栋321室</li>
-                        <li>电话：400-691-1891</li>
-                        <li>邮编：510000</li>
-                    </ul>
+                    <p>📍 广州市黄埔区神舟路9号4栋321室</p>
+                    <p>📞 400-691-1891</p>
+                    <p>📮 510000</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 广州安智信科技有限公司 | 
-                    <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备20002948号</a>
+                <p>&copy; 2025 广州安智信科技有限公司 |
+                    <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">粤ICP备20002948号</a>
                 </p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
-    <style>
-        .solution-detail {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .solution-badge {
-            display: inline-block;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            background: rgba(0, 212, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-        }
-
-        .solution-detail-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .solution-intro {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .solution-advantages {
-            margin-bottom: 2rem;
-        }
-
-        .solution-advantages h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .advantages-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .advantage-item {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 3px solid var(--accent-color);
-        }
-
-        .advantage-icon {
-            width: 30px;
-            height: 30px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-bottom: 0.75rem;
-        }
-
-        .advantage-item h4 {
-            font-size: 1.125rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .advantage-item p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .solution-applications {
-            margin-top: 2rem;
-        }
-
-        .solution-applications h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .solution-applications ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .solution-applications li {
-            padding: 0.75rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .solution-applications li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .solution-image-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(8, 72, 97, 0.3));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .solution-image-placeholder svg {
-            width: 150px;
-            height: 150px;
-            color: var(--accent-color);
-            opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .solution-detail {
-                grid-template-columns: 1fr;
-            }
-
-            .advantages-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-    </style>
 </body>
-</html>
 
+</html>

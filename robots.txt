@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.aztcon.com/sitemap.xml
+
+# 禁止访问临时文件和管理目录
+User-agent: *
+Disallow: /admin/
+Disallow: /temp/
+Disallow: /*.log$
