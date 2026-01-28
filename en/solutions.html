@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <!-- 基础 Meta 标签 -->
@@ -83,6 +83,11 @@
                 <div class="lang-switch" aria-label="Language switch">
                     <a href="../solutions.html" class="lang-btn" lang="zh-CN" hreflang="zh-CN">中文</a>
                     <a href="solutions.html" class="lang-btn active" lang="en" hreflang="en" aria-current="page">EN</a>
+                </div>
+                <div class="theme-switch" aria-label="Theme switch">
+                    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                        <span class="theme-icon">☀️</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -368,6 +373,7 @@
         </div>
     </footer>
 
+    <script src="../js/theme-toggle.js"></script>
     <script src="../js/main.js"></script>
 </body>
 

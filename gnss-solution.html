@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <!-- 基础 Meta 标签 -->
     <meta charset="UTF-8">
@@ -86,6 +86,11 @@
                 <div class="lang-switch" aria-label="Language switch">
                     <a href="gnss-solution.html" class="lang-btn active" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a>
                     <a href="en/gnss-solution.html" class="lang-btn" lang="en" hreflang="en">EN</a>
+                </div>
+                <div class="theme-switch" aria-label="Theme switch">
+                    <button id="themeToggle" class="theme-toggle-btn" aria-label="切换主题">
+                        <span class="theme-icon">☀️</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -289,6 +294,7 @@
         </div>
     </footer>
 
+    <script src="js/theme-toggle.js"></script>
     <script src="js/main.js"></script>
     <script>
         // 工具函数：标签换行

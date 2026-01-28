@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 电力物联网战略洞察 | AZX 市场分析报告</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: Corporate Tech Blue & Sustainable Green -->
+    <!-- Application Structure Plan: The app is designed as an Executive Strategic Dashboard. 
+         1. Executive Summary: Immediate answer to the "Progress" question.
+         2. Market Navigator: A split-view interface to toggle between Domestic (China) and Overseas strategies, as the tactics differ significantly.
+         3. Solution Matrix: An interactive grid filtering products by "Speed to Market" vs "Long-term Value" to address the "Quickly open market" requirement.
+         4. R&D Pulse Check: A dedicated interactive timeline visualization to analyze the "Is it normal?" question regarding research schedules.
+    -->
+    <!-- Visualization & Content Choices:
+         - Market Growth Comparison (Bar Chart): Goal -> Compare volume vs margin potential. Interaction -> Toggle year projection.
+         - Tech Focus Radar (Radar Chart): Goal -> Show required tech stack for 2026 competitiveness. Interaction -> Highlight specific tech domains.
+         - R&D Timeline (Custom HTML/CSS Viz): Goal -> Visualise product lifecycle to answer the "Progress" question realistically.
+         - Logic: Vanilla JS handles tab switching, data filtering, and chart updates.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        /* Custom Font settings for professional look */
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        /* Chart Container Styling - Mandatory Strict Compliance */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            /* Constrain width on large screens */
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            /* Base height */
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+                /* Slightly taller on desktop */
+            }
+        }
+
+        /* Interactive Element Transitions */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #0ea5e9;
+            color: #0284c7;
+            font-weight: 600;
+        }
+
+        .tab-inactive {
+            border-bottom: 3px solid transparent;
+            color: #64748b;
+        }
+
+        .tab-inactive:hover {
+            color: #334155;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        /* Custom Scrollbar for internal overflow areas */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <div
+                            class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                            A</div>
+                        <span class="font-bold text-xl tracking-tight text-slate-800">AZX 战略中心 <span
+                                class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full ml-2">2026展望</span></span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <button onclick="scrollToSection('dashboard')"
+                            class="text-slate-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">总览仪表盘</button>
+                        <button onclick="scrollToSection('markets')"
+                            class="text-slate-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">市场破局</button>
+                        <button onclick="scrollToSection('products')"
+                            class="text-slate-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">产品矩阵</button>
+                        <button onclick="scrollToSection('research')"
+                            class="text-slate-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">研发进度评估</button>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow transition-colors"
+                        onclick="alert('报告已导出为PDF (模拟)')">导出报告</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- Section 1: Executive Dashboard (Hero) -->
+        <div id="dashboard" class="mb-12 animate-fade-in">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-extrabold text-slate-900 mb-4">2026 电力物联网机遇与挑战</h1>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    针对 AZX (azxweb.vercel.app) 当前的发展阶段，本报告深入分析了2026年国内外电力IoT市场的切入点。
+                    核心结论：<span class="font-bold text-blue-600">国内拼"源网荷储"深度交互，海外拼"基础设施"高性价比升级。</span>
+                </p>
+            </div>
+
+            <!-- Key Metrics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white overflow-hidden shadow rounded-lg border-l-4 border-blue-500 p-5">
+                    <dt class="text-sm font-medium text-slate-500 truncate">2026 国内市场核心词</dt>
+                    <dd class="mt-1 text-2xl font-semibold text-slate-900">虚拟电厂 (VPP)</dd>
+                    <div class="mt-2 text-sm text-slate-600">需求集中在边缘计算网关与聚合调控</div>
+                </div>
+                <div class="bg-white overflow-hidden shadow rounded-lg border-l-4 border-emerald-500 p-5">
+                    <dt class="text-sm font-medium text-slate-500 truncate">2026 海外市场核心词</dt>
+                    <dd class="mt-1 text-2xl font-semibold text-slate-900">AMI & 微电网</dd>
+                    <div class="mt-2 text-sm text-slate-600">亚非拉需防窃电，欧美需新能源接入</div>
+                </div>
+                <div class="bg-white overflow-hidden shadow rounded-lg border-l-4 border-amber-500 p-5">
+                    <dt class="text-sm font-medium text-slate-500 truncate">当前研发进度预警</dt>
+                    <dd class="mt-1 text-2xl font-semibold text-amber-600">严重紧迫</dd>
+                    <div class="mt-2 text-sm text-slate-600">2026年启动研发属于"追赶型"，需策略调整</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Market Strategy (Split View) -->
+        <div id="markets" class="mb-16">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">市场破局方向</h2>
+                <p class="mt-2 text-slate-600">
+                    2026年的市场环境已不同于早期粗放式增长。请选择下方标签查看不同区域的高潜力切入点。
+                </p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 mb-6">
+                <button id="tab-china" onclick="switchTab('china')"
+                    class="tab-active w-1/2 py-4 text-center text-lg font-medium focus:outline-none">
+                    🇨🇳 中国国内市场 (内卷与创新并存)
+                </button>
+                <button id="tab-overseas" onclick="switchTab('overseas')"
+                    class="tab-inactive w-1/2 py-4 text-center text-lg font-medium focus:outline-none">
+                    🌍 海外国际市场 (蓝海与本地化挑战)
+                </button>
+            </div>
+
+            <!-- Dynamic Content Area -->
+            <div class="bg-white shadow rounded-lg p-6 min-h-[400px]">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+                    <!-- Text Content Column -->
+                    <div id="market-content-text">
+                        <!-- Content injected via JS -->
+                    </div>
+
+                    <!-- Visual Column -->
+                    <div class="bg-slate-50 rounded-lg p-4 border border-slate-100 flex flex-col justify-center">
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">核心竞争力雷达分析
+                        </h3>
+                        <div class="chart-container">
+                            <canvas id="marketRadarChart"></canvas>
+                        </div>
+                        <p id="chart-caption" class="text-xs text-center text-slate-400 mt-2">数据基于2026年行业趋势预测</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Product Matrix (Interactive Grid) -->
+        <div id="products" class="mb-16 bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">产品与解决方案矩阵</h2>
+                    <p class="mt-2 text-slate-600 max-w-2xl">
+                        如何在2026年尽快打开市场？我们根据<span class="text-blue-600 font-semibold">研发周期</span>与<span
+                            class="text-emerald-600 font-semibold">市场热度</span>筛选了以下方向。
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <select id="product-filter" onchange="filterProducts()"
+                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md bg-slate-50 border">
+                        <option value="all">显示全部方向</option>
+                        <option value="quick">⚡️ 快速切入 (3-6个月)</option>
+                        <option value="strategic">🛡️ 战略护城河 (12个月+)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Product Cards injected via JS -->
+            </div>
+        </div>
+
+        <!-- Section 4: R&D Assessment -->
+        <div id="research" class="mb-12">
+            <div class="bg-slate-900 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
+                <!-- Background decorative elements -->
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-blue-500 opacity-10"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-purple-500 opacity-10">
+                </div>
+
+                <div class="relative z-10">
+                    <h2 class="text-2xl font-bold mb-4">关键问题：现在开始研究进度正常吗？</h2>
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                            <span class="text-amber-400 font-bold">直言不讳：</span>
+                            如果您的目标是在2026年当年产生规模化收入，且现在（2026年初）才开始基础研发，进度属于<span
+                                class="underline decoration-amber-500 underline-offset-4">严重滞后</span>。
+                            电力物联网硬件（终端/网关）涉及型式试验、资质认证（如国网/南网认证、CE/MID认证），通常耗时12-18个月。
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                            <!-- Visual Timeline -->
+                            <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                                <h3 class="text-sm font-semibold text-blue-300 uppercase tracking-wider mb-4">典型硬件研发上市周期
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center">
+                                        <div class="w-24 text-xs text-slate-400">阶段 1 (3个月)</div>
+                                        <div class="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-blue-500" style="width: 100%"></div>
+                                        </div>
+                                        <div class="ml-3 text-xs text-white">立项与Demo</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-24 text-xs text-slate-400">阶段 2 (6个月)</div>
+                                        <div class="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-amber-500" style="width: 100%"></div>
+                                        </div>
+                                        <div class="ml-3 text-xs text-white">工程化与试产</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-24 text-xs text-slate-400">阶段 3 (6个月)</div>
+                                        <div class="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-red-500" style="width: 100%"></div>
+                                        </div>
+                                        <div class="ml-3 text-xs text-white">认证与入围测试</div>
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-xs text-amber-300 bg-amber-900/30 p-2 rounded">
+                                    ⚠️ 结论：现在开始，自研硬件产品上市最早要到2027年中。
+                                </p>
+                            </div>
+
+                            <!-- Actionable Advice -->
+                            <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
+                                <h3 class="text-sm font-semibold text-emerald-300 uppercase tracking-wider mb-4">AZX
+                                    追赶策略建议</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <span class="text-emerald-400 mr-2">✓</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">ODM/OEM
+                                                贴牌模式：</strong> 寻找成熟硬件方案，利用 AZX 软件能力赋能，缩短硬件周期至 3 个月。</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-emerald-400 mr-2">✓</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">纯软件/SaaS
+                                                切入：</strong> 针对海外市场提供 HEMS（家庭能源管理）APP 或轻量级集抄系统，无需硬件认证。</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-emerald-400 mr-2">✓</span>
+                                        <span class="text-sm text-slate-300"><strong class="text-white">生态合作：</strong>
+                                            与已入围国网/南网的一级供应商合作，提供边缘计算算法插件或通信模组。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-400 text-sm">
+                &copy; 2026 AZX Strategic Analysis Module. Generated for internal review.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State Management
+        const state = {
+            currentTab: 'china',
+            productFilter: 'all'
+        };
+
+        // Data Store
+        const marketData = {
+            china: {
+                title: "国内市场：深耕存量，聚焦互动",
+                description: `
+                    <div class="space-y-4 text-slate-600">
+                        <p><strong>市场背景：</strong> 2026年，国内智能电表覆盖率已近饱和。单纯卖表已无机会。政策重心在于"新型电力系统"建设，即解决新能源消纳问题。</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>机会点 1：台区智能融合终端 (Edge Gateway)</strong><br>低压配电网的可视化与控制是目前电网公司的痛点。需要能够运行容器化APP的边缘计算网关。</li>
+                            <li><strong>机会点 2：分布式光伏与储能协调控制</strong><br>随着户用光伏爆发，电网电压越限问题严重。提供"光储充"一体化调控算法和控制器是刚需。</li>
+                            <li><strong>机会点 3：虚拟电厂 (VPP) 聚合终端</strong><br>能够响应电网调度指令，调节空调、充电桩负荷的IoT控制器。</li>
+                        </ul>
+                    </div>
+                `,
+                radarData: [90, 85, 60, 95, 70], // Compliance, Edge Comp, Hardware Cost, Software/AI, Comms
+                radarLabels: ['政策合规性', '边缘计算能力', '硬件成本优势', '软件/AI算法', '通信稳定性']
+            },
+            overseas: {
+                title: "海外市场：因地制宜，降本增效",
+                description: `
+                    <div class="space-y-4 text-slate-600">
+                        <p><strong>市场背景：</strong> 海外市场极度碎片化。2026年，亚非拉在补课（基建），欧美在升级（绿色转型）。</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><strong>机会点 1 (亚非拉)：防窃电 AMI 系统</strong><br>高损耗是电力公司的痛点。提供带防窃电功能的预付费电表 + 远程集抄系统 (AMI)。重点是低成本与高可靠性。</li>
+                            <li><strong>机会点 2 (欧洲)：家庭能源管理 (HEMS)</strong><br>受能源价格波动影响，用户需要能看到实时能耗并自动省钱的工具。Matter协议兼容的智能插座、温控器与光伏逆变器网关。</li>
+                            <li><strong>机会点 3 (东南亚)：微电网控制器</strong><br>针对岛屿和弱电网地区，柴油机+光伏+储能的混合能源控制系统。</li>
+                        </ul>
+                    </div>
+                `,
+                radarData: [60, 50, 95, 70, 85], // Compliance, Edge Comp, Hardware Cost, Software/AI, Comms
+                radarLabels: ['政策合规性', '边缘计算能力', '硬件成本优势', '软件/AI算法', '通信稳定性']
+            }
+        };
+
+        const productsData = [
+            {
+                id: 1,
+                title: "轻量级光储协同控制器",
+                tag: "quick",
+                market: "Global",
+                desc: "针对户用场景，协调光伏逆变器与电池，无需复杂认证，通过电商或安装商渠道销售。",
+                icon: "☀️"
+            },
+            {
+                id: 2,
+                title: "AI 负荷辨识算法模块",
+                tag: "strategic",
+                market: "China",
+                desc: "嵌入到现有电表或终端中的软件插件，识别大功率电器，服务于电网精细化管理。纯软件，高壁垒。",
+                icon: "🧠"
+            },
+            {
+                id: 3,
+                title: "防窃电预付费管理系统 (SaaS)",
+                tag: "quick",
+                market: "Overseas",
+                desc: "配套廉价电表，通过云端STS代码生成与充值管理，快速解决发展中国家收费难问题。",
+                icon: "💰"
+            },
+            {
+                id: 4,
+                title: "符合 HPLC+RF 双模通信模组",
+                tag: "strategic",
+                market: "China",
+                desc: "国网2026年标准标配。研发周期长，技术门槛高，但一旦入围量极大。",
+                icon: "📡"
+            },
+            {
+                id: 5,
+                title: "智能断路器 (Smart Breaker)",
+                tag: "quick",
+                market: "Global",
+                desc: "替代传统空开，具备计量与远程通断功能。安装方便，适合后装市场改造。",
+                icon: "🔌"
+            },
+            {
+                id: 6,
+                title: "虚拟电厂 (VPP) 聚合平台",
+                tag: "strategic",
+                market: "China/EU",
+                desc: "云平台，连接数万个分散负荷。需要强大的并发处理能力与调度算法。",
+                icon: "☁️"
+            }
+        ];
+
+        // Chart Instances
+        let marketRadarChart = null;
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMarketSection('china'); // Default view
+            renderProducts('all');
+        });
+
+        // Navigation Scroller
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(region) {
+            state.currentTab = region;
+
+            // Update Tab Styles
+            const tabs = ['china', 'overseas'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === region) {
+                    btn.classList.remove('tab-inactive');
+                    btn.classList.add('tab-active');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                }
+            });
+
+            // Update Content with Fade Effect
+            const contentDiv = document.getElementById('market-content-text');
+            contentDiv.style.opacity = '0';
+
+            setTimeout(() => {
+                renderMarketSection(region);
+                contentDiv.style.opacity = '1';
+            }, 200);
+        }
+
+        // Render Market Section & Chart
+        function renderMarketSection(region) {
+            const data = marketData[region];
+
+            // Render Text
+            const contentHtml = `
+                <div class="prose prose-blue">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${data.title}</h3>
+                    ${data.description}
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <h4 class="font-bold text-blue-800 text-sm uppercase">AZX 2026 核心建议</h4>
+                        <p class="text-sm text-blue-700 mt-1">
+                            ${region === 'china' ?
+                    '不要碰基础电表制造（红海）。全力投入边缘计算网关软件栈与VPP接口适配。' :
+                    '避开欧美高端市场正面竞争。通过ODM硬件+自研轻量级管理SaaS切入东南亚或非洲市场。'}
+                        </p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('market-content-text').innerHTML = contentHtml;
+
+            // Render/Update Chart
+            const ctx = document.getElementById('marketRadarChart').getContext('2d');
+
+            if (marketRadarChart) {
+                marketRadarChart.destroy();
+            }
+
+            marketRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: data.radarLabels,
+                    datasets: [{
+                        label: region === 'china' ? '国内市场成功要素权重' : '海外市场成功要素权重',
+                        data: data.radarData,
+                        fill: true,
+                        backgroundColor: region === 'china' ? 'rgba(59, 130, 246, 0.2)' : 'rgba(16, 185, 129, 0.2)',
+                        borderColor: region === 'china' ? 'rgb(59, 130, 246)' : 'rgb(16, 185, 129)',
+                        pointBackgroundColor: region === 'china' ? 'rgb(59, 130, 246)' : 'rgb(16, 185, 129)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(59, 130, 246)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: { borderWidth: 3 }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            pointLabels: {
+                                font: { size: 12, weight: 'bold' },
+                                color: '#64748b'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            padding: 10
+                        }
+                    }
+                }
+            });
+        }
+
+        // Product Filtering Logic
+        function filterProducts() {
+            const select = document.getElementById('product-filter');
+            renderProducts(select.value);
+        }
+
+        function renderProducts(filter) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = ''; // Clear
+
+            const filtered = productsData.filter(p => filter === 'all' || p.tag === filter);
+
+            filtered.forEach(p => {
+                const tagColor = p.tag === 'quick' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800';
+                const tagText = p.tag === 'quick' ? '⚡️ 快速切入' : '🛡️ 战略长期';
+
+                const card = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 card-hover flex flex-col h-full relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity text-6xl select-none">
+                            ${p.icon}
+                        </div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <span class="text-4xl shadow-sm bg-slate-50 rounded-lg p-2">${p.icon}</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${tagColor}">
+                                ${tagText}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 relative z-10">${p.title}</h3>
+                        <p class="text-sm text-slate-500 mb-4 flex-grow relative z-10">
+                            ${p.desc}
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center relative z-10">
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">目标市场: ${p.market}</span>
+                            <button class="text-sm text-blue-600 font-medium hover:text-blue-800 transition-colors" onclick="showDetails('${p.title}')">
+                                查看详情 →
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function showDetails(title) {
+            alert(`关于 [${title}] 的详细技术方案与商业计划书通常需要单独定制。此功能在演示版中仅作为占位符。\n\nAZX 建议：如果选择此方向，请立即启动市场调研。`);
+        }
+
+    </script>
+</body>
+
+</html>·
